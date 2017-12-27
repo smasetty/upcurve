@@ -136,32 +136,32 @@ Library/fast:
 	$(MAKE) -f Library/CMakeFiles/Library.dir/build.make Library/CMakeFiles/Library.dir/build
 .PHONY : Library/fast
 
-producer_consumer.o: producer_consumer.cxx.o
+main.o: main.cxx.o
 
-.PHONY : producer_consumer.o
+.PHONY : main.o
 
 # target to build an object file
-producer_consumer.cxx.o:
-	$(MAKE) -f CMakeFiles/Upcurve.dir/build.make CMakeFiles/Upcurve.dir/producer_consumer.cxx.o
-.PHONY : producer_consumer.cxx.o
+main.cxx.o:
+	$(MAKE) -f CMakeFiles/Upcurve.dir/build.make CMakeFiles/Upcurve.dir/main.cxx.o
+.PHONY : main.cxx.o
 
-producer_consumer.i: producer_consumer.cxx.i
+main.i: main.cxx.i
 
-.PHONY : producer_consumer.i
+.PHONY : main.i
 
 # target to preprocess a source file
-producer_consumer.cxx.i:
-	$(MAKE) -f CMakeFiles/Upcurve.dir/build.make CMakeFiles/Upcurve.dir/producer_consumer.cxx.i
-.PHONY : producer_consumer.cxx.i
+main.cxx.i:
+	$(MAKE) -f CMakeFiles/Upcurve.dir/build.make CMakeFiles/Upcurve.dir/main.cxx.i
+.PHONY : main.cxx.i
 
-producer_consumer.s: producer_consumer.cxx.s
+main.s: main.cxx.s
 
-.PHONY : producer_consumer.s
+.PHONY : main.s
 
 # target to generate assembly for a file
-producer_consumer.cxx.s:
-	$(MAKE) -f CMakeFiles/Upcurve.dir/build.make CMakeFiles/Upcurve.dir/producer_consumer.cxx.s
-.PHONY : producer_consumer.cxx.s
+main.cxx.s:
+	$(MAKE) -f CMakeFiles/Upcurve.dir/build.make CMakeFiles/Upcurve.dir/main.cxx.s
+.PHONY : main.cxx.s
 
 # Help Target
 help:
@@ -173,9 +173,9 @@ help:
 	@echo "... edit_cache"
 	@echo "... Upcurve"
 	@echo "... Library"
-	@echo "... producer_consumer.o"
-	@echo "... producer_consumer.i"
-	@echo "... producer_consumer.s"
+	@echo "... main.o"
+	@echo "... main.i"
+	@echo "... main.s"
 .PHONY : help
 
 
