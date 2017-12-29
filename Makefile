@@ -111,19 +111,6 @@ depend:
 .PHONY : depend
 
 #=============================================================================
-# Target rules for targets named Upcurve
-
-# Build rule for target.
-Upcurve: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 Upcurve
-.PHONY : Upcurve
-
-# fast build rule for target.
-Upcurve/fast:
-	$(MAKE) -f CMakeFiles/Upcurve.dir/build.make CMakeFiles/Upcurve.dir/build
-.PHONY : Upcurve/fast
-
-#=============================================================================
 # Target rules for targets named Library
 
 # Build rule for target.
@@ -136,32 +123,18 @@ Library/fast:
 	$(MAKE) -f Library/CMakeFiles/Library.dir/build.make Library/CMakeFiles/Library.dir/build
 .PHONY : Library/fast
 
-main.o: main.cxx.o
+#=============================================================================
+# Target rules for targets named Upcurve
 
-.PHONY : main.o
+# Build rule for target.
+Upcurve: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 Upcurve
+.PHONY : Upcurve
 
-# target to build an object file
-main.cxx.o:
-	$(MAKE) -f CMakeFiles/Upcurve.dir/build.make CMakeFiles/Upcurve.dir/main.cxx.o
-.PHONY : main.cxx.o
-
-main.i: main.cxx.i
-
-.PHONY : main.i
-
-# target to preprocess a source file
-main.cxx.i:
-	$(MAKE) -f CMakeFiles/Upcurve.dir/build.make CMakeFiles/Upcurve.dir/main.cxx.i
-.PHONY : main.cxx.i
-
-main.s: main.cxx.s
-
-.PHONY : main.s
-
-# target to generate assembly for a file
-main.cxx.s:
-	$(MAKE) -f CMakeFiles/Upcurve.dir/build.make CMakeFiles/Upcurve.dir/main.cxx.s
-.PHONY : main.cxx.s
+# fast build rule for target.
+Upcurve/fast:
+	$(MAKE) -f src/CMakeFiles/Upcurve.dir/build.make src/CMakeFiles/Upcurve.dir/build
+.PHONY : Upcurve/fast
 
 # Help Target
 help:
@@ -171,11 +144,8 @@ help:
 	@echo "... depend"
 	@echo "... rebuild_cache"
 	@echo "... edit_cache"
-	@echo "... Upcurve"
 	@echo "... Library"
-	@echo "... main.o"
-	@echo "... main.i"
-	@echo "... main.s"
+	@echo "... Upcurve"
 .PHONY : help
 
 
