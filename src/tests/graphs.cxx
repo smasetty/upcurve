@@ -12,7 +12,7 @@ const TestFamily* graphs_init()
 {
     TestFamily *testFamily = new TestFamily("graphs", static_cast<int>(10));
     
-    TEST_DEF(FIRST_TEST_CASE, simple_test);
+    TEST_DEF(first_sample_test, simple_test);
 
     return testFamily;
 }
