@@ -7,10 +7,10 @@
 typedef std::map<std::string, const TestFamily*> TestFamilies;
 
 namespace flags {
-    bool allTests = false;
+    bool runAllTests = false;
     bool listTests = false;
     bool help = false;
-    bool runTest = false;
+    bool runSingleTest = false;
     std::string familyName;
     std::string testName;
 }
@@ -92,11 +92,11 @@ void ProcessCommandLine(int argc, char *argv[])
         else if (ParseBool(argv[i], "list"))
             flags::listTests = true;
         else if (ParseBool(argv[i], "all"))
-            flags::allTests = true;
+            flags::runAllTests = true;
         else if (ParseString(argv[i], "test", &returnValue)) {
             std::vector<std::string> tokens;
 
-            flags::runTest = true;
+            flags::runSingleTest = true;
 
             ProcessTestName(returnValue, tokens);
 
@@ -109,8 +109,8 @@ void ProcessCommandLine(int argc, char *argv[])
             it++;
             flags::testName.assign(*it);
 
-            std::cout << flags::familyName << std::endl;
-            std::cout << flags::testName << std::endl;
+            //std::cout << flags::familyName << std::endl;
+            //std::cout << flags::testName << std::endl;
         }
         else {
             PrintHelpAndExit();
@@ -129,15 +129,45 @@ int main(int argc, char *argv[])
         const TestFamily *family;
 
         family = groups[i].init();
-       // family->ShowTests();
-       // family->RunAllTests();
 
         groups[i].name = family->GetFamilyName().c_str();
 
         families[groups[i].name] = family;
     }
 
-    // Fix the leaks here
+    if (flags::listTests) {
+        for (auto it = families.begin(); it != families.end(); it++) {
+            const TestFamily *family = it->second;
+
+            std::cout << "Group: " << it->first << std::endl;
+            family->ShowTests();
+        }
+
+        exit(0);
+    }
+
+    if (flags::runAllTests) {
+        for (auto it = families.begin(); it != families.end(); it++) {
+            const TestFamily *family = it->second;
+
+            family->RunAllTests();
+        }
+
+        exit(0);
+    }
+
+    if (flags::runSingleTest) {
+        for (auto it = families.begin(); it != families.end(); it++) {
+            if (!strncmp(it->first.c_str(), flags::familyName.c_str(),
+                        strlen(it->first.c_str()))) {
+                const TestFamily *family = it->second;
+
+                family->RunSingleTest(flags::testName);
+            }
+        }
+    }
+
+    //TODO: Fix the leaks here
 
     return 1;
 }

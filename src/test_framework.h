@@ -36,9 +36,14 @@ public:
         maxTests(maxTests) {};
 
     void ShowTests() const{
-        for (auto i = testList.begin(); i != testList.end(); ++i) {
-            std::cout << "test case: " << (*i)->testName << std::endl;
+        int index = 1;
+
+        for (auto i = testList.begin(); i != testList.end();
+                ++i) {
+            std::cout << index++ << " " << (*i)->testName << std::endl;
         }
+
+        std::cout << std::endl;
     }
 
     const std::string& GetFamilyName() const { return familyName; }
@@ -49,17 +54,29 @@ public:
 
         testList.push_back(test);
     }
-    
+
     void RunAllTests() const {
         for (auto i = testList.begin(); i != testList.end(); ++i) {
-            std::cout << "Running Test: " << (*i)->testName << std::endl; 
-            std::cout << (*i)->testFunc(nullptr) << std::endl;
+            std::cout << "Running - " << (*i)->testName << ":"
+                << std::endl;
+            (*i)->testFunc(nullptr);
         }
     }
 
-    ~TestFamily() {
-        std::cout << "Deleting family object" << std::endl; 
-    }; // A more thorough cleanup is required here
+    void RunSingleTest(std::string& testName) const {
+        for (auto i = testList.begin(); i != testList.end(); ++i) {
+
+            if (!strncmp((*i)->testName.c_str(), testName.c_str(),
+                        (*i)->testName.size())) {
+
+                std::cout << "Running - " << (*i)->testName << ":"
+                    << std::endl;
+                (*i)->testFunc(nullptr);
+            }
+        }
+    }
+
+    ~TestFamily() {};
 
 private:
     TestFamily(const TestFamily&);
