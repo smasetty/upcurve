@@ -53,10 +53,10 @@ void PrintHelpAndExit()
 {
     fprintf(stdout,
             "Upcurve"
-            "\t[--help]\n"
-            "\t[--list]\n"
-            "\t[--all]\n"
-            "\t[--test=group.test_name]\n");
+            "\t[--list] - List all available tests\n"
+            "\t[--all] - Run all available tests\n"
+            "\t[--test=group.test_name] - Run a test(test_name) from family(group)\n"
+            "\t[--help] - Print help\n");
     exit(0);
 }
 
@@ -143,17 +143,18 @@ int main(int argc, char *argv[])
             family->ShowTests();
         }
 
-        exit(0);
+        goto done;
     }
 
     if (flags::runAllTests) {
         for (auto it = families.begin(); it != families.end(); it++) {
             const TestFamily *family = it->second;
 
+            std::cout << "Group: " << it->first << std::endl;
             family->RunAllTests();
         }
 
-        exit(0);
+        goto done;
     }
 
     if (flags::runSingleTest) {
@@ -167,7 +168,10 @@ int main(int argc, char *argv[])
         }
     }
 
-    //TODO: Fix the leaks here
+done:
+    for (auto it = families.begin(); it != families.end(); it++) {
+        delete it->second;
+    }
 
-    return 1;
+    return 0;
 }

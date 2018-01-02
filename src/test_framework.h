@@ -76,7 +76,12 @@ public:
         }
     }
 
-    ~TestFamily() {};
+    ~TestFamily() {
+        std::cout << "Deleting: "<< familyName <<  std::endl;
+
+        for (auto i = testList.begin(); i != testList.end(); ++i)
+            delete *i;
+    };
 
 private:
     TestFamily(const TestFamily&);
