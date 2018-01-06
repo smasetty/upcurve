@@ -5,7 +5,7 @@
 int simple_test(void *data)
 {
     std::cout << "This is very simple test case." << std::endl;
-    return 1;
+    return TEST_SUCCESS;
 }
 
 const TestFamily* graphs_init()

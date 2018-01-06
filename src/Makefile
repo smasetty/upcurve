@@ -179,33 +179,6 @@ tests/graphs.cxx.s:
 	cd /Users/sharatmasetty/Documents/playarea/upcurve && $(MAKE) -f src/CMakeFiles/Upcurve.dir/build.make src/CMakeFiles/Upcurve.dir/tests/graphs.cxx.s
 .PHONY : tests/graphs.cxx.s
 
-tests/tests.o: tests/tests.cxx.o
-
-.PHONY : tests/tests.o
-
-# target to build an object file
-tests/tests.cxx.o:
-	cd /Users/sharatmasetty/Documents/playarea/upcurve && $(MAKE) -f src/CMakeFiles/Upcurve.dir/build.make src/CMakeFiles/Upcurve.dir/tests/tests.cxx.o
-.PHONY : tests/tests.cxx.o
-
-tests/tests.i: tests/tests.cxx.i
-
-.PHONY : tests/tests.i
-
-# target to preprocess a source file
-tests/tests.cxx.i:
-	cd /Users/sharatmasetty/Documents/playarea/upcurve && $(MAKE) -f src/CMakeFiles/Upcurve.dir/build.make src/CMakeFiles/Upcurve.dir/tests/tests.cxx.i
-.PHONY : tests/tests.cxx.i
-
-tests/tests.s: tests/tests.cxx.s
-
-.PHONY : tests/tests.s
-
-# target to generate assembly for a file
-tests/tests.cxx.s:
-	cd /Users/sharatmasetty/Documents/playarea/upcurve && $(MAKE) -f src/CMakeFiles/Upcurve.dir/build.make src/CMakeFiles/Upcurve.dir/tests/tests.cxx.s
-.PHONY : tests/tests.cxx.s
-
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -221,9 +194,6 @@ help:
 	@echo "... tests/graphs.o"
 	@echo "... tests/graphs.i"
 	@echo "... tests/graphs.s"
-	@echo "... tests/tests.o"
-	@echo "... tests/tests.i"
-	@echo "... tests/tests.s"
 .PHONY : help
 
 

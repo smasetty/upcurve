@@ -1,8 +1,10 @@
 #include <iostream>
+#include <iomanip>
 #include <string>
 #include <vector>
 #include "test_framework.h"
 #include "test_groups.h"
+#include "log.h"
 
 typedef std::map<std::string, const TestFamily*> TestFamilies;
 
@@ -11,6 +13,7 @@ namespace flags {
     bool listTests = false;
     bool help = false;
     bool runSingleTest = false;
+    bool profileTime = false;
     std::string familyName;
     std::string testName;
 }
@@ -56,6 +59,7 @@ void PrintHelpAndExit()
             "\t[--list] - List all available tests\n"
             "\t[--all] - Run all available tests\n"
             "\t[--test=group.test_name] - Run a test(test_name) from family(group)\n"
+            "\t[--profile] - Profiles time take for a test in milliseconds resolution,\n\t\t\t only valid with the --test option\n"
             "\t[--help] - Print help\n");
     exit(0);
 }
@@ -112,10 +116,24 @@ void ProcessCommandLine(int argc, char *argv[])
             //std::cout << flags::familyName << std::endl;
             //std::cout << flags::testName << std::endl;
         }
+        else if(ParseString(argv[i], "profile", &returnValue)) {
+            flags::profileTime = true;
+        }
         else {
             PrintHelpAndExit();
         }
     }
+}
+
+void PrintRunData(const TestData &runData) {
+
+    //TODO:: change this to use the new logging API
+    std::cout << "----------------------"  << std::endl;
+    std::cout << std::setw(14) << std::left << "Total tests:" << runData.totalRun << std::endl;
+    std::cout << std::setw(14) << std::left << "Passed:" << runData.totalPass << std::endl;
+    std::cout << std::setw(14) << std::left << "Failed:" << runData.totalFailed << std::endl;
+    std::cout << std::setw(14) << std::left << "Skipped:" << runData.totalSkipped << std::endl;
+    std::cout << "----------------------" << std::endl;
 }
 
 int main(int argc, char *argv[])
@@ -123,15 +141,17 @@ int main(int argc, char *argv[])
     ProcessCommandLine(argc, argv);
 
     TestFamilies families;
+    TestData runData;
+
+    std::unique_ptr<Logger> log = std::make_unique<Logger>();
+    log->SetOutputStream(&std::cout);
+    log->GetLog(LOG_HIGH)<< "This is a sample log" << std::endl;
 
     for (int i = 0; i < ARRAY_SIZE(groups); i++) {
-
         const TestFamily *family;
 
         family = groups[i].init();
-
         groups[i].name = family->GetFamilyName().c_str();
-
         families[groups[i].name] = family;
     }
 
@@ -151,7 +171,7 @@ int main(int argc, char *argv[])
             const TestFamily *family = it->second;
 
             std::cout << "Group: " << it->first << std::endl;
-            family->RunAllTests();
+            family->RunAllTests(runData);
         }
 
         goto done;
@@ -159,16 +179,27 @@ int main(int argc, char *argv[])
 
     if (flags::runSingleTest) {
         for (auto it = families.begin(); it != families.end(); it++) {
-            if (!strncmp(it->first.c_str(), flags::familyName.c_str(),
-                        strlen(it->first.c_str()))) {
+            if (it->first == flags::familyName) {
+                int timeDuration;
+                int status;
                 const TestFamily *family = it->second;
 
-                family->RunSingleTest(flags::testName);
+                if (flags::profileTime)
+                    status = family->RunSingleTest(flags::testName,
+                            runData, timeDuration);
+                else
+                    status = family->RunSingleTest(flags::testName,
+                            runData);
+
+                if (flags::profileTime && status != TEST_NOT_FOUND)
+                    std::cout << "The test took: " << timeDuration << " ms" << \
+                        std::endl;
             }
         }
     }
 
 done:
+    PrintRunData(runData);
     for (auto it = families.begin(); it != families.end(); it++) {
         delete it->second;
     }

@@ -8,6 +8,13 @@
 
 #define ARRAY_SIZE(a) sizeof(a)/sizeof(a[0])
 
+#define TEST_SUCCESS 0
+#define TEST_FAILURE 1
+#define TEST_SKIPPED 2
+
+//Internal Errors
+#define TEST_NOT_FOUND -1
+
 typedef int (*testFunction)(void *data);
 
 struct Test {
@@ -16,6 +23,21 @@ struct Test {
     int flags;
     int status;
     testFunction testFunc;
+};
+
+struct TestData {
+public:
+    int totalRun;
+    int totalSkipped;
+    int totalFailed;
+    int totalPass;
+public:
+    TestData(): totalPass(0), totalRun(0), totalFailed(0),
+        totalSkipped(0) {};
+    ~TestData() {};
+private:
+        TestData(const TestData&);
+        TestData& operator=(const TestData &);
 };
 
 #define STR_VALUE(str) #str
@@ -55,29 +77,78 @@ public:
         testList.push_back(test);
     }
 
-    void RunAllTests() const {
-        for (auto i = testList.begin(); i != testList.end(); ++i) {
-            std::cout << "Running - " << (*i)->testName << ":"
-                << std::endl;
-            (*i)->testFunc(nullptr);
-        }
-    }
-
-    void RunSingleTest(std::string& testName) const {
+    int RunSingleTest(const std::string& testName, struct TestData &data)
+        const{
         for (auto i = testList.begin(); i != testList.end(); ++i) {
 
-            if (!strncmp((*i)->testName.c_str(), testName.c_str(),
-                        (*i)->testName.size())) {
+            if ((*i)->testName == testName) {
 
                 std::cout << "Running - " << (*i)->testName << ":"
                     << std::endl;
-                (*i)->testFunc(nullptr);
+
+                auto status = (*i)->testFunc(nullptr);
+
+                data.totalRun++;
+                if  (status == TEST_SUCCESS)
+                    data.totalPass++;
+                else if (status == TEST_FAILURE)
+                    data.totalFailed++;
+                else if (status == TEST_SKIPPED)
+                    data.totalSkipped++;
+
+                return status;
             }
+        }
+
+        return TEST_NOT_FOUND;
+    }
+
+    int RunSingleTest(const std::string& testName, struct TestData &data,
+            int& timeDuration) const{
+        for (auto i = testList.begin(); i != testList.end(); ++i) {
+
+            if ((*i)->testName == testName) {
+
+                std::cout << "Running - " << (*i)->testName << ":"
+                    << std::endl;
+
+                std::chrono::time_point<std::chrono::system_clock> begin =
+                    std::chrono::system_clock::now();
+
+                auto status = (*i)->testFunc(nullptr);
+
+                std::chrono::time_point<std::chrono::system_clock> end =
+                    std::chrono::system_clock::now();
+
+                data.totalRun++;
+
+                if  (status == TEST_SUCCESS) {
+
+                    data.totalPass++;
+                    timeDuration =
+                        std::chrono::duration_cast<std::chrono::milliseconds>
+                        (end - begin).count();
+                }
+                else if (status == TEST_FAILURE)
+                    data.totalFailed++;
+                else if (status == TEST_SKIPPED)
+                    data.totalSkipped++;
+
+                return status;
+            }
+        }
+
+        return TEST_NOT_FOUND;
+    }
+
+    void RunAllTests(struct TestData& data) const {
+        for (auto i = testList.begin(); i != testList.end(); ++i) {
+            RunSingleTest((*i)->testName, data);
         }
     }
 
     ~TestFamily() {
-        std::cout << "Deleting: "<< familyName <<  std::endl;
+        //std::cout << "Deleting: "<< familyName <<  std::endl;
 
         for (auto i = testList.begin(); i != testList.end(); ++i)
             delete *i;
@@ -90,6 +161,4 @@ private:
     int maxTests;
     std::string familyName;
 };
-
-
 #endif /* ifndef TEST_FW_H */
