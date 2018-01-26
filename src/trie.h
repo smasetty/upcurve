@@ -17,6 +17,11 @@ public:
         rootNode->endOfWord = false;
     };
 
+    ~Trie() {
+        std::cout << "Deleting the Trie tree \n";
+        DeleteTree(rootNode);
+    }
+
     void InsertWord(const std::string &word) {
         auto wordLen = word.length();
 
@@ -72,6 +77,19 @@ public:
     }
 
 private:
+
+    bool DeleteTree(struct TrieNode *node) {
+
+        for (auto it = node->arr.begin(); it != node->arr.end(); it++)
+            DeleteTree(it->second);
+
+        if (node->arr.size() == 0) {
+            delete node;
+        }
+
+        return true;
+    }
+
     bool DeleteWord(struct TrieNode *node, const std::string& word, int index) {
         if ((index) == word.length()) {
 
