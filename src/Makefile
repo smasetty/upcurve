@@ -179,6 +179,60 @@ tests/graphs.cxx.s:
 	cd /Users/sharatmasetty/Documents/playarea/upcurve && $(MAKE) -f src/CMakeFiles/Upcurve.dir/build.make src/CMakeFiles/Upcurve.dir/tests/graphs.cxx.s
 .PHONY : tests/graphs.cxx.s
 
+tests/matrix.o: tests/matrix.cxx.o
+
+.PHONY : tests/matrix.o
+
+# target to build an object file
+tests/matrix.cxx.o:
+	cd /Users/sharatmasetty/Documents/playarea/upcurve && $(MAKE) -f src/CMakeFiles/Upcurve.dir/build.make src/CMakeFiles/Upcurve.dir/tests/matrix.cxx.o
+.PHONY : tests/matrix.cxx.o
+
+tests/matrix.i: tests/matrix.cxx.i
+
+.PHONY : tests/matrix.i
+
+# target to preprocess a source file
+tests/matrix.cxx.i:
+	cd /Users/sharatmasetty/Documents/playarea/upcurve && $(MAKE) -f src/CMakeFiles/Upcurve.dir/build.make src/CMakeFiles/Upcurve.dir/tests/matrix.cxx.i
+.PHONY : tests/matrix.cxx.i
+
+tests/matrix.s: tests/matrix.cxx.s
+
+.PHONY : tests/matrix.s
+
+# target to generate assembly for a file
+tests/matrix.cxx.s:
+	cd /Users/sharatmasetty/Documents/playarea/upcurve && $(MAKE) -f src/CMakeFiles/Upcurve.dir/build.make src/CMakeFiles/Upcurve.dir/tests/matrix.cxx.s
+.PHONY : tests/matrix.cxx.s
+
+tests/strings.o: tests/strings.cxx.o
+
+.PHONY : tests/strings.o
+
+# target to build an object file
+tests/strings.cxx.o:
+	cd /Users/sharatmasetty/Documents/playarea/upcurve && $(MAKE) -f src/CMakeFiles/Upcurve.dir/build.make src/CMakeFiles/Upcurve.dir/tests/strings.cxx.o
+.PHONY : tests/strings.cxx.o
+
+tests/strings.i: tests/strings.cxx.i
+
+.PHONY : tests/strings.i
+
+# target to preprocess a source file
+tests/strings.cxx.i:
+	cd /Users/sharatmasetty/Documents/playarea/upcurve && $(MAKE) -f src/CMakeFiles/Upcurve.dir/build.make src/CMakeFiles/Upcurve.dir/tests/strings.cxx.i
+.PHONY : tests/strings.cxx.i
+
+tests/strings.s: tests/strings.cxx.s
+
+.PHONY : tests/strings.s
+
+# target to generate assembly for a file
+tests/strings.cxx.s:
+	cd /Users/sharatmasetty/Documents/playarea/upcurve && $(MAKE) -f src/CMakeFiles/Upcurve.dir/build.make src/CMakeFiles/Upcurve.dir/tests/strings.cxx.s
+.PHONY : tests/strings.cxx.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -194,6 +248,12 @@ help:
 	@echo "... tests/graphs.o"
 	@echo "... tests/graphs.i"
 	@echo "... tests/graphs.s"
+	@echo "... tests/matrix.o"
+	@echo "... tests/matrix.i"
+	@echo "... tests/matrix.s"
+	@echo "... tests/strings.o"
+	@echo "... tests/strings.i"
+	@echo "... tests/strings.s"
 .PHONY : help
 
 

@@ -7,7 +7,6 @@
 #include "log.h"
 
 typedef std::map<std::string, const TestFamily*> TestFamilies;
-
 namespace flags {
     bool runAllTests = false;
     bool listTests = false;

@@ -32,8 +32,7 @@ public:
     int totalFailed;
     int totalPass;
 public:
-    TestData(): totalPass(0), totalRun(0), totalFailed(0),
-        totalSkipped(0) {};
+    TestData(): totalRun(0), totalSkipped(0), totalFailed(0), totalPass(0) {};
     ~TestData() {};
 private:
         TestData(const TestData&);
@@ -54,8 +53,8 @@ private:
 
 class TestFamily {
 public:
-    explicit TestFamily(std::string name, int maxTests): familyName(name) ,
-        maxTests(maxTests) {};
+    explicit TestFamily(std::string name, int maxTests): maxTests(maxTests),
+        familyName(name) {};
 
     void ShowTests() const{
         int index = 1;
