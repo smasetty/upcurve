@@ -94,7 +94,7 @@ int KMPSearchSuccess(void *data)
 
     auto status = KMPSubstringSearch(pattern, input, temp); 
 
-    delete temp;
+    delete[] temp;
 
     if (status == true)
         return TEST_SUCCESS;
@@ -112,7 +112,7 @@ int KMPSearchFail(void *data)
 
     auto status = KMPSubstringSearch(pattern, input, temp); 
 
-    delete temp;
+    delete[] temp;
 
     if (status == false)
         return TEST_SUCCESS;
