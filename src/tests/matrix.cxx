@@ -14,6 +14,53 @@ static void PrintNxNMatrix(const int arr[][5], int size)
     std::cout <<  std::endl;
 }
 
+int PrintMatrixSpiral(void *data)
+{
+    //5*5 matrix for now
+    int arr[5][5] = {
+        {1,   2,  3,  4,  5},
+        {6,   7,  8,  9, 10},
+        {11, 12, 13, 14, 15},
+        {16, 17, 18, 19, 20},
+        {21, 22, 23, 24, 25},
+    };
+
+    int k = 0; //starting row index
+    int l = 0; //starting col index
+    int m = 5; // num rows
+    int n = 5; //num cols
+    int i = 0;
+
+    while ((k < m) && (l < n)) {
+        for (i = l; i < n; i++)
+            std::cout << arr[k][i] << " ";
+        k++;
+        std::cout << "---";
+
+        for (i = k; i < m; i++)
+            std::cout << arr[i][n-1] << " ";
+        n--;
+        std::cout << "---";
+
+        if (k < m) {
+            for ( i = n-1; i >= l; i-- )
+                std::cout << arr[m-1][i] << " ";
+            m--;
+            std::cout << "---";
+        }
+
+        if (l < n) {
+            for (i = m-1; i >= k; i--)
+                std::cout << arr[i][l] << " ";
+            l++;
+            std::cout << "---";
+        }
+    }
+    
+    std::cout << std::endl;
+    return TEST_SUCCESS;
+}
+            
 // Rotate the Matrix 90 degress clockwise
 int MatrixRotate(void *data)
 {
@@ -69,6 +116,7 @@ const TestFamily* matrix_init()
     TestFamily *testFamily = new TestFamily("matrix", static_cast<int>(10));
 
     TEST_DEF(matrix_rotate, MatrixRotate);
+    TEST_DEF(print_matrix_spiral, PrintMatrixSpiral);
 
     return testFamily;
 }

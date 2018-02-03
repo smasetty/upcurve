@@ -152,6 +152,33 @@ main.cxx.s:
 	cd /Users/sharatmasetty/Documents/playarea/upcurve && $(MAKE) -f src/CMakeFiles/Upcurve.dir/build.make src/CMakeFiles/Upcurve.dir/main.cxx.s
 .PHONY : main.cxx.s
 
+tests/arrays.o: tests/arrays.cxx.o
+
+.PHONY : tests/arrays.o
+
+# target to build an object file
+tests/arrays.cxx.o:
+	cd /Users/sharatmasetty/Documents/playarea/upcurve && $(MAKE) -f src/CMakeFiles/Upcurve.dir/build.make src/CMakeFiles/Upcurve.dir/tests/arrays.cxx.o
+.PHONY : tests/arrays.cxx.o
+
+tests/arrays.i: tests/arrays.cxx.i
+
+.PHONY : tests/arrays.i
+
+# target to preprocess a source file
+tests/arrays.cxx.i:
+	cd /Users/sharatmasetty/Documents/playarea/upcurve && $(MAKE) -f src/CMakeFiles/Upcurve.dir/build.make src/CMakeFiles/Upcurve.dir/tests/arrays.cxx.i
+.PHONY : tests/arrays.cxx.i
+
+tests/arrays.s: tests/arrays.cxx.s
+
+.PHONY : tests/arrays.s
+
+# target to generate assembly for a file
+tests/arrays.cxx.s:
+	cd /Users/sharatmasetty/Documents/playarea/upcurve && $(MAKE) -f src/CMakeFiles/Upcurve.dir/build.make src/CMakeFiles/Upcurve.dir/tests/arrays.cxx.s
+.PHONY : tests/arrays.cxx.s
+
 tests/graphs.o: tests/graphs.cxx.o
 
 .PHONY : tests/graphs.o
@@ -245,6 +272,9 @@ help:
 	@echo "... main.o"
 	@echo "... main.i"
 	@echo "... main.s"
+	@echo "... tests/arrays.o"
+	@echo "... tests/arrays.i"
+	@echo "... tests/arrays.s"
 	@echo "... tests/graphs.o"
 	@echo "... tests/graphs.i"
 	@echo "... tests/graphs.s"

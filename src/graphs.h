@@ -4,6 +4,7 @@
 #include <iostream>
 #include <queue>
 #include <list>
+#include <stack>
 
 class Graph {
     Graph& operator=(const Graph&);
@@ -16,6 +17,7 @@ protected:
 public:
     Graph(int numVertices) {
         this->numVertices = numVertices;
+        //TODO: fix the off by one; clients should start from 0 index
         adj = new std::list<int>[numVertices + 1];
     }
 
@@ -85,6 +87,47 @@ public:
         std::map<int, bool> visited;
 
         DFSUtil(vertex, visited);
+    }
+
+    void TopologicalSortUtil(int current, std::map<int, bool>& visited,
+            std::stack<int>& nodeList ) {
+
+        for (auto it = adj[current].begin(); it != adj[current].end(); it++) {
+            if (!visited[*it]) {
+                visited[*it] = true;
+                TopologicalSortUtil(*it, visited, nodeList);
+            }
+        }
+
+        nodeList.push(current);
+    }
+
+    /*
+     *TopologicalSort: Print the nodes in a directed graph in 
+     *topologically sorted order, i.e. if there is an edge from a->b, 
+     *then a should always be before b in any given topologically
+     *sorted list for the graph.
+     */
+    void TopologicalSort() {
+        std::map<int, bool> visited;
+        int current = 0;
+        std::stack<int> nodeList;
+
+        for(current = 1; current <= numVertices; current++) {
+            if (adj[current].size() == 0)
+                continue;
+
+            if (visited[current])
+                continue;
+
+            visited[current] = true;
+            TopologicalSortUtil(current, visited, nodeList);
+        }
+
+        while(!nodeList.empty()) {
+            std::cout << nodeList.top() << " ";
+            nodeList.pop();
+        }
     }
 };
 
