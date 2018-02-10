@@ -260,6 +260,87 @@ tests/strings.cxx.s:
 	cd /Users/sharatmasetty/Documents/playarea/upcurve && $(MAKE) -f src/CMakeFiles/Upcurve.dir/build.make src/CMakeFiles/Upcurve.dir/tests/strings.cxx.s
 .PHONY : tests/strings.cxx.s
 
+tests/tree_helper.o: tests/tree_helper.cxx.o
+
+.PHONY : tests/tree_helper.o
+
+# target to build an object file
+tests/tree_helper.cxx.o:
+	cd /Users/sharatmasetty/Documents/playarea/upcurve && $(MAKE) -f src/CMakeFiles/Upcurve.dir/build.make src/CMakeFiles/Upcurve.dir/tests/tree_helper.cxx.o
+.PHONY : tests/tree_helper.cxx.o
+
+tests/tree_helper.i: tests/tree_helper.cxx.i
+
+.PHONY : tests/tree_helper.i
+
+# target to preprocess a source file
+tests/tree_helper.cxx.i:
+	cd /Users/sharatmasetty/Documents/playarea/upcurve && $(MAKE) -f src/CMakeFiles/Upcurve.dir/build.make src/CMakeFiles/Upcurve.dir/tests/tree_helper.cxx.i
+.PHONY : tests/tree_helper.cxx.i
+
+tests/tree_helper.s: tests/tree_helper.cxx.s
+
+.PHONY : tests/tree_helper.s
+
+# target to generate assembly for a file
+tests/tree_helper.cxx.s:
+	cd /Users/sharatmasetty/Documents/playarea/upcurve && $(MAKE) -f src/CMakeFiles/Upcurve.dir/build.make src/CMakeFiles/Upcurve.dir/tests/tree_helper.cxx.s
+.PHONY : tests/tree_helper.cxx.s
+
+tests/trees.o: tests/trees.cxx.o
+
+.PHONY : tests/trees.o
+
+# target to build an object file
+tests/trees.cxx.o:
+	cd /Users/sharatmasetty/Documents/playarea/upcurve && $(MAKE) -f src/CMakeFiles/Upcurve.dir/build.make src/CMakeFiles/Upcurve.dir/tests/trees.cxx.o
+.PHONY : tests/trees.cxx.o
+
+tests/trees.i: tests/trees.cxx.i
+
+.PHONY : tests/trees.i
+
+# target to preprocess a source file
+tests/trees.cxx.i:
+	cd /Users/sharatmasetty/Documents/playarea/upcurve && $(MAKE) -f src/CMakeFiles/Upcurve.dir/build.make src/CMakeFiles/Upcurve.dir/tests/trees.cxx.i
+.PHONY : tests/trees.cxx.i
+
+tests/trees.s: tests/trees.cxx.s
+
+.PHONY : tests/trees.s
+
+# target to generate assembly for a file
+tests/trees.cxx.s:
+	cd /Users/sharatmasetty/Documents/playarea/upcurve && $(MAKE) -f src/CMakeFiles/Upcurve.dir/build.make src/CMakeFiles/Upcurve.dir/tests/trees.cxx.s
+.PHONY : tests/trees.cxx.s
+
+tree.o: tree.cxx.o
+
+.PHONY : tree.o
+
+# target to build an object file
+tree.cxx.o:
+	cd /Users/sharatmasetty/Documents/playarea/upcurve && $(MAKE) -f src/CMakeFiles/Upcurve.dir/build.make src/CMakeFiles/Upcurve.dir/tree.cxx.o
+.PHONY : tree.cxx.o
+
+tree.i: tree.cxx.i
+
+.PHONY : tree.i
+
+# target to preprocess a source file
+tree.cxx.i:
+	cd /Users/sharatmasetty/Documents/playarea/upcurve && $(MAKE) -f src/CMakeFiles/Upcurve.dir/build.make src/CMakeFiles/Upcurve.dir/tree.cxx.i
+.PHONY : tree.cxx.i
+
+tree.s: tree.cxx.s
+
+.PHONY : tree.s
+
+# target to generate assembly for a file
+tree.cxx.s:
+	cd /Users/sharatmasetty/Documents/playarea/upcurve && $(MAKE) -f src/CMakeFiles/Upcurve.dir/build.make src/CMakeFiles/Upcurve.dir/tree.cxx.s
+.PHONY : tree.cxx.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -284,6 +365,15 @@ help:
 	@echo "... tests/strings.o"
 	@echo "... tests/strings.i"
 	@echo "... tests/strings.s"
+	@echo "... tests/tree_helper.o"
+	@echo "... tests/tree_helper.i"
+	@echo "... tests/tree_helper.s"
+	@echo "... tests/trees.o"
+	@echo "... tests/trees.i"
+	@echo "... tests/trees.s"
+	@echo "... tree.o"
+	@echo "... tree.i"
+	@echo "... tree.s"
 .PHONY : help
 
 

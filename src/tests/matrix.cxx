@@ -14,6 +14,84 @@ static void PrintNxNMatrix(const int arr[][5], int size)
     std::cout <<  std::endl;
 }
 
+//5*5 matrix for now
+int arr[5][5] = {
+    {1,   2,  3,  4,  5},
+    {6,   7,  8,  9, 10},
+    {11, 12, 13, 14, 15},
+    {16, 17, 18, 19, 20},
+    {21, 22, 23, 24, 25},
+};
+
+
+static inline bool InBounds(int x, int y, int& size)
+{
+    if ((x >= 0 && x < size) && (y >= 0 && y < size))
+        return true;
+    else
+        return false;
+}
+
+#define UP 0
+#define DOWN 1
+#define SIZE 5
+
+static inline void GetNextXY(int &x, int &y, int dir)
+{
+    if (dir == UP){
+        x = x - 1;
+        y = y + 1;
+    } else if (dir == DOWN) {
+        x = x + 1;
+        y = y - 1;
+    }
+}
+
+void PrintMatrixDiagonalUtil(int (&arr)[SIZE][SIZE], int x, int y,
+        int& size, int dir) 
+{
+    if(!InBounds(x, y, size))
+        return;
+
+    while (1) {
+        int x_t = x, y_t = y;
+        std::cout << arr[x][y] << " ";
+        
+        GetNextXY(x_t, y_t, dir);
+        if (!InBounds(x_t, y_t, size))
+            break;
+
+        x = x_t;
+        y = y_t;
+    }
+    std::cout << std::endl;
+
+    if (dir == UP) {
+        if (y < size - 1)
+            y++;
+        else if (y == size - 1)
+            x++;
+        dir = DOWN;
+    } else if (dir == DOWN) {
+        if (x < size - 1)
+            x++;
+        else if (x == size - 1)
+            y++;
+        dir = UP;
+    }
+
+    PrintMatrixDiagonalUtil(arr, x, y, size, dir);
+}
+
+int PrintMatrixDiagonal(void *data) 
+{
+    int size = SIZE;
+    PrintNxNMatrix(arr, size);
+    PrintMatrixDiagonalUtil(arr, 0, 0, size, UP);
+
+    return TEST_SUCCESS;
+}
+
 int PrintMatrixSpiral(void *data)
 {
     //5*5 matrix for now
@@ -117,6 +195,7 @@ const TestFamily* matrix_init()
 
     TEST_DEF(matrix_rotate, MatrixRotate);
     TEST_DEF(print_matrix_spiral, PrintMatrixSpiral);
+    TEST_DEF(print_matrix_diagonal, PrintMatrixDiagonal);
 
     return testFamily;
 }

@@ -5,6 +5,7 @@ extern const TestFamily* graphs_init(void);
 extern const TestFamily* matrix_init(void);
 extern const TestFamily* strings_init(void);
 extern const TestFamily* arrays_init(void);
+extern const TestFamily* trees_init(void);
 
 typedef const TestFamily* (*InitFunction)(void);
 
@@ -17,6 +18,7 @@ struct TestGroups {
     {.init = matrix_init},
     {.init = strings_init},
     {.init = arrays_init},
+    {.init = trees_init},
 };
 
 #endif /* ifndef TESTGROUPS_H */
