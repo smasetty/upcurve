@@ -26,4 +26,7 @@ struct TreeNode* LcaBt(struct TreeNode* root, int key1, int key2);
 
 int LevelNode(struct TreeNode *root, int level, int& key);
 
+void SerializeBinaryTree(struct TreeNode* root, FILE* fp);
+void DeSerializeBinaryTree(struct TreeNode*& root, FILE* fp);
+
 #endif

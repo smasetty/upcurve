@@ -96,3 +96,32 @@ int LevelNode(struct TreeNode *root, int level, int& key)
 
     return left;
 }
+
+#define MARKER -1
+void SerializeBinaryTree(struct TreeNode* root, FILE* fp)
+{
+    if(!root) {
+        fprintf(fp, "%d ", MARKER);
+        return;
+    }
+
+    fprintf(fp, "%d ", root->key);
+
+    SerializeBinaryTree(root->left, fp);
+    SerializeBinaryTree(root->right, fp);
+}
+
+void DeSerializeBinaryTree(struct TreeNode* &root, FILE* fp)
+{
+    int val = -1;
+
+    int ret = fscanf(fp, "%d ", &val);
+    std::cout << ret << " " << val << " " << std::endl;
+
+    if (val == EOF || val == MARKER)
+        return;
+
+    root = new TreeNode(val);
+    DeSerializeBinaryTree(root->left, fp);
+    DeSerializeBinaryTree(root->right, fp);
+}

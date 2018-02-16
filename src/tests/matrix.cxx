@@ -2,6 +2,7 @@
 #include <string>
 #include <iomanip>
 #include "test_framework.h"
+#include "trie.h"
 
 //Helper function to print a NxN matrix
 static void PrintNxNMatrix(const int arr[][5], int size)
@@ -188,6 +189,53 @@ int MatrixRotate(void *data)
 
     return TEST_SUCCESS;
 }
+/* Print all unique rows in a binary matric */
+int UniqueRow(void *data)
+{
+#define NRROWS 5
+#define NRCOLS 5
+    int arr[5][5] = {
+        {1, 1, 1, 0, 1},
+        {0, 1, 1, 0, 1},
+        {1, 0, 1, 0, 1},
+        {1, 1, 1, 0, 1},
+        {1, 1, 1, 0, 1},
+    };
+
+    Trie testTrie;
+    std::string testString;
+    
+    for (int i = 0; i < NRROWS; i++) {
+
+        /*
+         * A bit of a hack done here to convert each row of the matrix
+         * to a std::string format, so that the trie interface can accept
+         * rows
+         */
+        int temp = 0;
+        for (int j = 0; j < NRCOLS; j++) {
+            temp = temp * 10 + arr[i][j];
+        }
+
+        std::string tempString = std::to_string(temp);
+
+        if (testTrie.SearchWord(tempString)) {
+            /*
+             * Found a Duplicate row.
+             * Maybe do something here? 
+             */
+        }
+        else {
+            testTrie.InsertWord(tempString);
+
+            for (int j = 0; j < NRCOLS; j++)
+                std::cout << arr[i][j] << " ";
+            std::cout << std::endl;
+        }
+    }
+
+    return TEST_SUCCESS;
+}
 
 const TestFamily* matrix_init()
 {
@@ -196,6 +244,7 @@ const TestFamily* matrix_init()
     TEST_DEF(matrix_rotate, MatrixRotate);
     TEST_DEF(print_matrix_spiral, PrintMatrixSpiral);
     TEST_DEF(print_matrix_diagonal, PrintMatrixDiagonal);
+    TEST_DEF(unique_row, UniqueRow);
 
     return testFamily;
 }

@@ -7,6 +7,8 @@ extern const TestFamily* strings_init(void);
 extern const TestFamily* arrays_init(void);
 extern const TestFamily* trees_init(void);
 extern const TestFamily* backtrack_init(void);
+extern const TestFamily* ll_init(void);
+extern const TestFamily* stack_init(void);
 
 typedef const TestFamily* (*InitFunction)(void);
 
@@ -21,6 +23,8 @@ struct TestGroups {
     {.init = arrays_init},
     {.init = trees_init},
     {.init = backtrack_init},
+    {.init = ll_init},
+    {.init = stack_init},
 };
 
 #endif /* ifndef TESTGROUPS_H */

@@ -41,7 +41,7 @@ public:
             current = current->arr[word[i]];
 
             if ((i + 1) == wordLen)
-                current->endOfWord= true;
+                current->endOfWord = true;
         }
     }
 
