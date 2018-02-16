@@ -179,6 +179,33 @@ tests/arrays.cxx.s:
 	cd /Users/sharatmasetty/Documents/playarea/upcurve && $(MAKE) -f src/CMakeFiles/Upcurve.dir/build.make src/CMakeFiles/Upcurve.dir/tests/arrays.cxx.s
 .PHONY : tests/arrays.cxx.s
 
+tests/backtrack.o: tests/backtrack.cxx.o
+
+.PHONY : tests/backtrack.o
+
+# target to build an object file
+tests/backtrack.cxx.o:
+	cd /Users/sharatmasetty/Documents/playarea/upcurve && $(MAKE) -f src/CMakeFiles/Upcurve.dir/build.make src/CMakeFiles/Upcurve.dir/tests/backtrack.cxx.o
+.PHONY : tests/backtrack.cxx.o
+
+tests/backtrack.i: tests/backtrack.cxx.i
+
+.PHONY : tests/backtrack.i
+
+# target to preprocess a source file
+tests/backtrack.cxx.i:
+	cd /Users/sharatmasetty/Documents/playarea/upcurve && $(MAKE) -f src/CMakeFiles/Upcurve.dir/build.make src/CMakeFiles/Upcurve.dir/tests/backtrack.cxx.i
+.PHONY : tests/backtrack.cxx.i
+
+tests/backtrack.s: tests/backtrack.cxx.s
+
+.PHONY : tests/backtrack.s
+
+# target to generate assembly for a file
+tests/backtrack.cxx.s:
+	cd /Users/sharatmasetty/Documents/playarea/upcurve && $(MAKE) -f src/CMakeFiles/Upcurve.dir/build.make src/CMakeFiles/Upcurve.dir/tests/backtrack.cxx.s
+.PHONY : tests/backtrack.cxx.s
+
 tests/graphs.o: tests/graphs.cxx.o
 
 .PHONY : tests/graphs.o
@@ -356,6 +383,9 @@ help:
 	@echo "... tests/arrays.o"
 	@echo "... tests/arrays.i"
 	@echo "... tests/arrays.s"
+	@echo "... tests/backtrack.o"
+	@echo "... tests/backtrack.i"
+	@echo "... tests/backtrack.s"
 	@echo "... tests/graphs.o"
 	@echo "... tests/graphs.i"
 	@echo "... tests/graphs.s"

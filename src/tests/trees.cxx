@@ -6,6 +6,7 @@
 #include "graphs.h"
 #include "tree.h"
 #include "tree_helper.h"
+#include "backtrace.h"
 
 int BSTTest(void *data) {
     //TODO create an Interface object and use dynamic casting if needed.
