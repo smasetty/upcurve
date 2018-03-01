@@ -18,8 +18,8 @@ struct Node* GenerateListOdd()
     struct Node *head = new Node(1);
     head->next = new Node(2);
     head->next->next = new Node(3);
-    head->next->next->next = new Node(4);
-    head->next->next->next->next = new Node(5);
+    head->next->next->next = new Node(2);
+    head->next->next->next->next = new Node(1);
 
     return head;
 }
@@ -32,6 +32,36 @@ struct Node* GenerateListLoop()
     head->next->next->next = new Node(4);
     head->next->next->next->next = new Node(5);
     head->next->next->next->next->next = head;
+
+    return head;
+}
+
+/*
+ * Generates a list which is not flat in structure, but its sorted in every
+ * direction
+ */
+struct NodeX* GenerateListNotFlat()
+{
+    struct NodeX* head = new NodeX(5);
+    head->down = new NodeX(7);
+    head->down->down = new NodeX(8);
+    head->down->down->down = new NodeX(30);
+
+    struct NodeX* head2 = new NodeX(10);
+    head2->down = new NodeX(20);
+
+    struct NodeX* head3 = new NodeX(19);
+    head3->down = new NodeX(22);
+    head3->down->down = new NodeX(50);
+
+    struct NodeX* head4 = new NodeX(28);
+    head4->down = new NodeX(35);
+    head4->down->down = new NodeX(40);
+    head4->down->down->down = new NodeX(45);
+
+    head->next = head2;
+    head2->next = head3;
+    head3->next = head4;
 
     return head;
 }
@@ -73,6 +103,17 @@ void PrintList(struct Node* head)
     while(current != nullptr) {
         std::cout<< current->key << " ";
         current = current->next;
+    }
+    std::cout << std::endl;
+}
+
+void PrintList(struct NodeX* head)
+{
+    struct NodeX* current = head;
+
+    while(current != nullptr) {
+        std::cout<< current->key << " ";
+        current = current->down;
     }
     std::cout << std::endl;
 }

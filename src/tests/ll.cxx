@@ -1,4 +1,6 @@
 #include <iostream>
+#include <unordered_map>
+#include <list>
 #include "ll_helper.h"
 #include "test_framework.h"
 
@@ -116,6 +118,149 @@ int LLAdd2(void *data)
     return TEST_SUCCESS;
 }
 
+struct NodeX* SortedMerge(struct NodeX* a, struct NodeX* b)
+{
+    /*
+     * If one of the list is empty, return the other one
+     */
+    if (!a)
+        return b;
+
+    /*
+     * If one of the list is empty, return the other one
+     */
+    if (!b)
+        return a;
+    
+    struct NodeX* result = nullptr;
+
+    /*
+     * Add the Node with the smaller key first and recurse down both the lists
+     */
+    if (a->key < b->key) {
+        result = a;
+        result->down = SortedMerge(a->down, b);
+    }
+    else {
+        result = b;
+        result->down = SortedMerge(a, b->down);
+    }
+
+    return result;
+}
+
+struct NodeX* Flatten(struct NodeX* head)
+{
+    if(!head || !head->next)
+        return head;
+    
+    struct NodeX* rest = Flatten(head->next);
+
+    return SortedMerge(head, rest);
+}
+
+int LLFlat(void* data)
+{
+    struct NodeX* head = GenerateListNotFlat();
+
+    struct NodeX* result = Flatten(head);
+    PrintList(result);
+
+    return TEST_SUCCESS;
+}
+
+#define CACHE_SIZE 3
+void LRUCacheRefer(std::list<int>& list,
+        std::unordered_map<int, std::list<int>::iterator>& hash, int key)
+{
+    /*
+     * hash gives us faster access times, first search if the key is present
+     * in the cache.
+     */
+    if (hash.find(key) == hash.end()) {
+        /*
+         * If the key is not present and the cache size is full, then remove
+         * the last element which is the least recently used from both the list
+         * and the hash.
+         */
+        if (list.size() == CACHE_SIZE) {
+            int last = list.back();
+            list.pop_back();
+            hash.erase(last);
+        }
+    }
+    else {
+
+        /*
+         * If the key is already present in the cache, then just remove it from
+         * the current location and move it to the front of the list
+         */
+        list.erase(hash[key]);
+    }
+    
+    /*
+     * Add the key to the front of the list.
+     */
+    list.push_front(key);
+    hash[key] = list.begin();
+
+    /*
+     * Print for debug purposes, not strictly needed
+     */
+    for (auto it = list.begin(); it != list.end(); it++)
+        std::cout << *it << " ";
+    std::cout << std::endl;
+}
+
+int LRUCache(void* data)
+{
+    std::list<int> dq;
+    std::unordered_map<int, std::list<int>::iterator> hash;
+
+    LRUCacheRefer(dq, hash, 1);
+    LRUCacheRefer(dq, hash, 2);
+    LRUCacheRefer(dq, hash, 3);
+    LRUCacheRefer(dq, hash, 4);
+    LRUCacheRefer(dq, hash, 1);
+    LRUCacheRefer(dq, hash, 2);
+    LRUCacheRefer(dq, hash, 5);
+    LRUCacheRefer(dq, hash, 1);
+    LRUCacheRefer(dq, hash, 2);
+    LRUCacheRefer(dq, hash, 3);
+    LRUCacheRefer(dq, hash, 5);
+
+    return TEST_SUCCESS;
+}
+
+bool IsListPalindromeHelper(struct Node** left, struct Node* right)
+{
+    if (!right)
+        return true;
+
+    if (!IsListPalindromeHelper(left, right->next))
+        return false;
+
+    bool isPal = (*left)->key == right->key;
+
+    *left = (*left)->next;
+
+    return isPal;
+}
+
+int IsListPalindrome(void* data)
+{
+    struct Node* head = GenerateListOdd();
+
+    bool isPal = IsListPalindromeHelper(&head, head);
+
+    if (isPal)
+        std::cout << "The given list is a palindrome" << std::endl;
+    else
+        std::cout << "The given list is not a palindrome" << std::endl;
+
+    return TEST_SUCCESS;
+}
+
 const TestFamily* ll_init()
 {
     TestFamily *testFamily = new TestFamily("ll", static_cast<int>(10));
@@ -128,6 +273,9 @@ const TestFamily* ll_init()
     TEST_DEF(detect_remove_loop, DetectRemoveLoopTest);
     TEST_DEF(ll_add_1, LLAdd1);
     TEST_DEF(ll_add_2, LLAdd2);
+    TEST_DEF(ll_flat, LLFlat);
+    TEST_DEF(lru_cache, LRUCache);
+    TEST_DEF(is_list_palindrome, IsListPalindrome);
 
     return testFamily;
 }

@@ -107,10 +107,13 @@ public:
 };
 
 //Find out the least number of die throws to reach the end
-int SnakesLaddersGame(void *data) {
+int SnakesLaddersGame(void *data)
+{
     std::vector<int> move(BOARDSIZE, -1);
+
     for (int i = 0; i < BOARDSIZE; i++)
         move[i] = -1;
+    
     //Setup the Snakes and Ladders
     move[3]  = 22;
     move[5]  = 8;
@@ -173,6 +176,73 @@ int SnakesLaddersGame(void *data) {
     return TEST_SUCCESS;
 }
 
+#define NR_ROWS     5
+#define NR_COLS     5
+
+static bool isSafe(int row, int col)
+{
+    if ((row >= 0 && row < NR_ROWS) && (col >= 0 && col < NR_COLS))
+        return true;
+
+    return false;
+}
+
+void DfsIslandHelper(int M[][NR_COLS], bool visited[][NR_COLS],
+        int row, int col)
+{
+    static const int rIdx[] = {-1, -1, -1, 0, 0, 1, 1, 1};
+    static const int cIdx[] = {-1, 0, 1, -1, 1, -1, 0, 1};
+
+    visited[row][col] = true;
+
+    for (int k = 0; k <  ARRAY_SIZE(rIdx); k++) {
+        int nRow = row + rIdx[k];
+        int nCol = col + cIdx[k];
+
+        /*
+         * Do a depth first search of all reachable 1's from this point on
+         */
+        if (M[nRow][nCol] && !visited[nRow][nCol] && isSafe(nRow, nCol))
+            DfsIslandHelper(M, visited, nRow, nCol);
+    }
+}
+
+int CountIslandsHelper(int M[][NR_COLS])
+{
+    int count = 0;
+    bool visited[NR_ROWS][NR_COLS] = {{false}};
+
+    for (int i = 0; i < NR_ROWS; i++) {
+        for (int j = 0; j < NR_COLS; j++) {
+            if (M[i][j] && !visited[i][j]) {
+                DfsIslandHelper(M, visited, i, j);
+
+                /*
+                 * Count the number of distinct islands
+                 */
+                ++count;
+            }
+        }
+    }
+
+    return count;
+}
+
+int CountIslands(void* data)
+{
+    int M[NR_ROWS][NR_COLS] = {
+        {1, 1, 0, 0, 0},
+        {0, 1, 0, 0, 1},
+        {1, 0, 0, 1, 1},
+        {0, 0, 0, 0, 0},
+        {1, 0, 1, 0, 1},
+    };
+
+    std::cout << "The number of islands is: " << CountIslandsHelper(M) << std::endl;
+
+    return TEST_SUCCESS;
+}
+
 const TestFamily* graphs_init()
 {
     TestFamily *testFamily = new TestFamily("graphs", static_cast<int>(10));
@@ -181,7 +251,8 @@ const TestFamily* graphs_init()
     TEST_DEF(bfs_test, BFSTest);
     TEST_DEF(dfs_test, DFSTest);
     TEST_DEF(topological_Sort, TopologicalSort);
-    TEST_DEF(snakes_and_ladders, SnakesLaddersGame)
+    TEST_DEF(snakes_and_ladders, SnakesLaddersGame);
+    TEST_DEF(count_islands, CountIslands);
 
     return testFamily;
 }

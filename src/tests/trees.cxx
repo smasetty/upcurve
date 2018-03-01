@@ -356,8 +356,7 @@ struct TreeNode* PreorderToBSTHelper(std::vector<int>& arr, int& index, int key,
         return nullptr;
 
     if (key > min && key < max) {
-        struct TreeNode* root = new TreeNode(arr[index]);
-        index += 1;
+        struct TreeNode* root = new TreeNode(arr[index++]);
 
         if (index < size) {
            root->left = PreorderToBSTHelper(arr, index, arr[index], min, key,
@@ -385,12 +384,15 @@ struct TreeNode* PostOrderToBSTHelper(std::vector<int>& arr, int& index,
         return nullptr;
 
     if (key > min && key < max) {
-        struct TreeNode* root = new TreeNode(arr[index]);
-        index -= 1;
+        struct TreeNode* root = new TreeNode(arr[index--]);
 
         if (index >= 0) {
-            root->left = PostOrderToBSTHelper(arr, index, arr[index], min, key, size);
-            root->right = PostOrderToBSTHelper(arr, index, arr[index], key, max, size);
+
+            root->left = PostOrderToBSTHelper(arr, index, arr[index],
+                    min, key, size);
+
+            root->right = PostOrderToBSTHelper(arr, index, arr[index],
+                    key, max, size);
         }
         
         return root;
@@ -518,6 +520,220 @@ int InOrderWoRecursion(void* data)
     return TEST_SUCCESS;
 }
 
+/*
+ * We are trying to find a pair in a BST which equals a given sum,
+ * The idea is that we traverse the tree in both the forward inorder and the
+ * reverse inorder and see if the keys form a given sum. This approach is 
+ * similar to the one we use for arrays
+ */
+void FindSumBSTHelper(struct TreeNode* root, int sum)
+{
+    struct TreeNode* current1 = root;
+    struct TreeNode* current2 = root;
+    std::stack<struct TreeNode* > s1, s2;
+    bool done1 = false;
+    bool done2 = false;
+    int val1 = 0;
+    int val2 = 0;
+
+    while(1) {
+
+        /*
+         * Non recurive inorder tree traversal, alternate version of the one
+         * used in the above method
+         */
+        while(done1 == false) {
+            if(current1) {
+                s1.push(current1);
+                current1 = current1->left;
+            }
+            else {
+                if(s1.empty())
+                    done1 = true;
+                else {
+                    struct TreeNode* temp = s1.top();
+                    s1.pop();
+                    val1 = temp->key;
+                    current1 = temp->right;
+                    /* We want to pick one element at a time */
+                    done1 = true;
+                }
+            }
+        }
+
+        while(done2 == false) {
+            if(current2) {
+                s2.push(current2);
+                current2 = current2->right;
+            }
+            else {
+                if(s2.empty())
+                    done2 = true;
+                else {
+                    struct TreeNode* temp = s2.top();
+                    s2.pop();
+                    val2 = temp->key;
+                    current2 = temp->left;
+
+                    /* We want to pick one element at a time */
+                    done2 = true;
+                }
+            }
+        }
+
+        if (val1 && val2 && (val1 + val2 == sum)) {
+            std::cout << "Sum elements found" << val1 << " + " << val2 << " = " << sum << std::endl;
+            return;
+        }
+
+        if (val1 + val2 < sum)
+            done1 = false;
+        else if (val1 + val2 > sum)
+            done2 = false;
+
+        if (val1 >= val2) {
+            std::cout << "There is no pair with the given sum" << std::endl;
+            return;
+        }
+
+    }
+}
+
+int FindSumBST(void* data)
+{
+    struct TreeNode* root = CreateBinarySearchTree();
+
+    FindSumBSTHelper(root, 20);
+
+    DeleteTree(root);
+    return TEST_SUCCESS;
+}
+
+/*
+ * Print all the nodes at distance k from the given root node
+ */
+void NodesAtDistanceDown(struct TreeNode* root, int k)
+{
+    if (!root || k < 0)
+        return;
+
+    if (k == 0)
+        std::cout << root->key << " ";
+
+    NodesAtDistanceDown(root->left, k - 1);
+    NodesAtDistanceDown(root->right, k - 1);
+}
+
+/*
+ * This function returns the distance of the node target from the node root.
+ */
+int NodesAtDistanceUtil(struct TreeNode* root, struct TreeNode* target, int k)
+{
+    if (!root)
+        return -1;
+
+    if (root == target) {
+        NodesAtDistanceDown(root, k);
+        return 0;
+    }
+
+    /*
+     * Try to find the node on the left side of the tree.
+     * If the node is available, then try printing the ancestral nodes
+     */
+    int dl = NodesAtDistanceUtil(root->left, target, k);
+    if (dl != -1) {
+        if (dl + 1 == k)
+            std::cout << root->key << " ";
+        else
+            NodesAtDistanceDown(root->right, k-dl-2);
+
+        return dl + 1;
+    }
+
+    /*
+     * Try the other side of the tree, if the previous side failed search for
+     * the target node.
+     */
+    int dr = NodesAtDistanceUtil(root->right, target, k);
+    if (dr != -1) {
+        if (dr + 1 == k)
+            std::cout << root->key << " ";
+        else
+            NodesAtDistanceDown(root->left, k-dr-2);
+
+        return dr + 1;
+    }
+
+    return -1;
+}
+
+int NodesAtDistance(void* data)
+{
+    struct TreeNode* root = CreateBinaryTree2();
+    struct TreeNode* target;
+
+    target = root->left->right->left;
+
+    NodesAtDistanceUtil(root, target, 3);
+
+    DeleteTree(root);
+    std::cout << std::endl;
+
+    return TEST_SUCCESS;
+}
+
+struct TreeNodeX{
+    int key;
+    struct TreeNodeX* left;
+    struct TreeNodeX* right;
+    struct TreeNodeX* parent;
+};
+
+struct TreeNodeX* GetMinValue(struct TreeNodeX* root)
+{
+    struct TreeNodeX* current = root;
+
+    while(current != nullptr)
+        current = current->left;
+
+    return current;
+}
+
+struct TreeNodeX* InorderSuccessorHelper(struct TreeNodeX* node)
+{
+    if (!node)
+        return nullptr;
+
+    if (node->right)
+        return GetMinValue(node->right);
+
+    /*
+     * If there is no right node for the required node, then we need to
+     * find the first parent node in the path to the root which has a left 
+     * child in the path
+     */
+    struct TreeNodeX *p = node->parent;
+    while(p != nullptr && node == p->right) {
+        node = p;
+        p = p->parent;
+    }
+
+    return p;
+}
+
+int InorderSuccessor(void* data)
+{
+    struct TreeNodeX* root = nullptr;
+    struct TreeNodeX* inOrderSuccessor = InorderSuccessorHelper(root->left);
+
+    if (inOrderSuccessor)
+        std::cout << inOrderSuccessor->key << " ";
+    std::cout << std::endl;
+
+    return TEST_SUCCESS;
+}
+
 const TestFamily* trees_init()
 {
     TestFamily *testFamily = new TestFamily("trees", static_cast<int>(10));
@@ -535,6 +751,9 @@ const TestFamily* trees_init()
     TEST_DEF(postorder_to_bst, PostOrderToBST);
     TEST_DEF(serialize_bt, SerializeBT);
     TEST_DEF(inorder_wo_recursion, InOrderWoRecursion);
+    TEST_DEF(find_sum_bst, FindSumBST);
+    TEST_DEF(nodes_at_distance, NodesAtDistance);
+    TEST_DEF(inorder_successor, InorderSuccessor);
 
     return testFamily;
 }

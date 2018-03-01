@@ -48,10 +48,10 @@ RM = /usr/local/Cellar/cmake/3.10.1/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /Users/sharatmasetty/Documents/playarea/upcurve
+CMAKE_SOURCE_DIR = /Users/sharatmasetty/Documents/upcurve
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /Users/sharatmasetty/Documents/playarea/upcurve
+CMAKE_BINARY_DIR = /Users/sharatmasetty/Documents/upcurve
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -80,14 +80,14 @@ edit_cache/fast: edit_cache
 
 # The main all target
 all: cmake_check_build_system
-	cd /Users/sharatmasetty/Documents/playarea/upcurve && $(CMAKE_COMMAND) -E cmake_progress_start /Users/sharatmasetty/Documents/playarea/upcurve/CMakeFiles /Users/sharatmasetty/Documents/playarea/upcurve/Library/CMakeFiles/progress.marks
-	cd /Users/sharatmasetty/Documents/playarea/upcurve && $(MAKE) -f CMakeFiles/Makefile2 Library/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /Users/sharatmasetty/Documents/playarea/upcurve/CMakeFiles 0
+	cd /Users/sharatmasetty/Documents/upcurve && $(CMAKE_COMMAND) -E cmake_progress_start /Users/sharatmasetty/Documents/upcurve/CMakeFiles /Users/sharatmasetty/Documents/upcurve/Library/CMakeFiles/progress.marks
+	cd /Users/sharatmasetty/Documents/upcurve && $(MAKE) -f CMakeFiles/Makefile2 Library/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/sharatmasetty/Documents/upcurve/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
 clean:
-	cd /Users/sharatmasetty/Documents/playarea/upcurve && $(MAKE) -f CMakeFiles/Makefile2 Library/clean
+	cd /Users/sharatmasetty/Documents/upcurve && $(MAKE) -f CMakeFiles/Makefile2 Library/clean
 .PHONY : clean
 
 # The main clean target
@@ -97,22 +97,22 @@ clean/fast: clean
 
 # Prepare targets for installation.
 preinstall: all
-	cd /Users/sharatmasetty/Documents/playarea/upcurve && $(MAKE) -f CMakeFiles/Makefile2 Library/preinstall
+	cd /Users/sharatmasetty/Documents/upcurve && $(MAKE) -f CMakeFiles/Makefile2 Library/preinstall
 .PHONY : preinstall
 
 # Prepare targets for installation.
 preinstall/fast:
-	cd /Users/sharatmasetty/Documents/playarea/upcurve && $(MAKE) -f CMakeFiles/Makefile2 Library/preinstall
+	cd /Users/sharatmasetty/Documents/upcurve && $(MAKE) -f CMakeFiles/Makefile2 Library/preinstall
 .PHONY : preinstall/fast
 
 # clear depends
 depend:
-	cd /Users/sharatmasetty/Documents/playarea/upcurve && $(CMAKE_COMMAND) -H$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 1
+	cd /Users/sharatmasetty/Documents/upcurve && $(CMAKE_COMMAND) -H$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 1
 .PHONY : depend
 
 # Convenience name for target.
 Library/CMakeFiles/Library.dir/rule:
-	cd /Users/sharatmasetty/Documents/playarea/upcurve && $(MAKE) -f CMakeFiles/Makefile2 Library/CMakeFiles/Library.dir/rule
+	cd /Users/sharatmasetty/Documents/upcurve && $(MAKE) -f CMakeFiles/Makefile2 Library/CMakeFiles/Library.dir/rule
 .PHONY : Library/CMakeFiles/Library.dir/rule
 
 # Convenience name for target.
@@ -122,7 +122,7 @@ Library: Library/CMakeFiles/Library.dir/rule
 
 # fast build rule for target.
 Library/fast:
-	cd /Users/sharatmasetty/Documents/playarea/upcurve && $(MAKE) -f Library/CMakeFiles/Library.dir/build.make Library/CMakeFiles/Library.dir/build
+	cd /Users/sharatmasetty/Documents/upcurve && $(MAKE) -f Library/CMakeFiles/Library.dir/build.make Library/CMakeFiles/Library.dir/build
 .PHONY : Library/fast
 
 dummy.o: dummy.cxx.o
@@ -131,7 +131,7 @@ dummy.o: dummy.cxx.o
 
 # target to build an object file
 dummy.cxx.o:
-	cd /Users/sharatmasetty/Documents/playarea/upcurve && $(MAKE) -f Library/CMakeFiles/Library.dir/build.make Library/CMakeFiles/Library.dir/dummy.cxx.o
+	cd /Users/sharatmasetty/Documents/upcurve && $(MAKE) -f Library/CMakeFiles/Library.dir/build.make Library/CMakeFiles/Library.dir/dummy.cxx.o
 .PHONY : dummy.cxx.o
 
 dummy.i: dummy.cxx.i
@@ -140,7 +140,7 @@ dummy.i: dummy.cxx.i
 
 # target to preprocess a source file
 dummy.cxx.i:
-	cd /Users/sharatmasetty/Documents/playarea/upcurve && $(MAKE) -f Library/CMakeFiles/Library.dir/build.make Library/CMakeFiles/Library.dir/dummy.cxx.i
+	cd /Users/sharatmasetty/Documents/upcurve && $(MAKE) -f Library/CMakeFiles/Library.dir/build.make Library/CMakeFiles/Library.dir/dummy.cxx.i
 .PHONY : dummy.cxx.i
 
 dummy.s: dummy.cxx.s
@@ -149,7 +149,7 @@ dummy.s: dummy.cxx.s
 
 # target to generate assembly for a file
 dummy.cxx.s:
-	cd /Users/sharatmasetty/Documents/playarea/upcurve && $(MAKE) -f Library/CMakeFiles/Library.dir/build.make Library/CMakeFiles/Library.dir/dummy.cxx.s
+	cd /Users/sharatmasetty/Documents/upcurve && $(MAKE) -f Library/CMakeFiles/Library.dir/build.make Library/CMakeFiles/Library.dir/dummy.cxx.s
 .PHONY : dummy.cxx.s
 
 # Help Target
@@ -175,6 +175,6 @@ help:
 # No rule that depends on this can have commands that come from listfiles
 # because they might be regenerated.
 cmake_check_build_system:
-	cd /Users/sharatmasetty/Documents/playarea/upcurve && $(CMAKE_COMMAND) -H$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 0
+	cd /Users/sharatmasetty/Documents/upcurve && $(CMAKE_COMMAND) -H$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 0
 .PHONY : cmake_check_build_system
 

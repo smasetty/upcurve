@@ -24,6 +24,66 @@ int arr[5][5] = {
     {21, 22, 23, 24, 25},
 };
 
+#define NRROWS 5
+#define NRCOLS 5
+//5*5 matrix for now
+int binaryMatrix[NRROWS][NRCOLS] = {
+    {1, 0, 1, 1, 1},
+    {0, 1, 0, 0, 0},
+    {0, 1, 1, 1, 1},
+    {1, 1, 1, 1, 1},
+    {1, 1, 1, 1, 1},
+};
+
+/*
+ * Find the size of sub matrix with all 1's
+ */
+int Max1s(void* data)
+{
+    int temp[NRROWS][NRCOLS] = {{0}};
+
+    /*
+     * Copy the first row and the first column from the
+     * original matrix as this wont change.
+     */
+    for (int i = 0; i < NRCOLS; i++)
+        temp[0][i] = binaryMatrix[0][i];
+
+    for (int i = 0; i < NRROWS; i++)
+        temp[i][0] = binaryMatrix[i][0];
+    
+    std::cout << "The input Matrix is the following" << std::endl;
+    PrintNxNMatrix(binaryMatrix, NRROWS);
+    std::cout << "The temp Matrix is the following" << std::endl;
+    PrintNxNMatrix(temp, NRROWS);
+
+    for (int i = 1; i < NRROWS; i++) {
+        for (int j = 1; j < NRCOLS; j++) {
+            if (binaryMatrix[i][j]) {
+                /*
+                 * Can be moved to a function of its own
+                 */
+                int oper1 = temp[i][j-1];
+                int oper2 = temp[i-1][j];
+                int oper3 = temp[i-1][j-1];
+                int min = oper1;
+
+                if (oper2 < min)
+                    min = oper2;
+                
+                if (oper3 < min)
+                    min = oper3;
+
+                temp[i][j] = min + 1;
+            }
+            else
+                temp[i][j] = 0;
+        }
+    }
+    PrintNxNMatrix(temp, NRROWS);
+
+    return TEST_SUCCESS;
+}
 
 static inline bool InBounds(int x, int y, int& size)
 {
@@ -189,6 +249,7 @@ int MatrixRotate(void *data)
 
     return TEST_SUCCESS;
 }
+
 /* Print all unique rows in a binary matric */
 int UniqueRow(void *data)
 {
@@ -237,6 +298,100 @@ int UniqueRow(void *data)
     return TEST_SUCCESS;
 }
 
+/*
+ * For the TicTacToe we are assuming a square board. The length of the board
+ * can changed or configured though
+ */
+static int RowCheck(int (&arr)[NRROWS][NRROWS])
+{
+    int i, j;
+    for (i = 0; i < NRROWS; i++) {
+        int val = arr[i][0];
+
+        for (j = 1; j < NRROWS; j++) {
+            if (arr[i][j] != val)
+                break;
+        }
+        /* Row successfuly verified. */
+        if (j == NRROWS)
+            return true;
+    }
+
+    return false;
+}
+
+static int ColCheck(int (&arr)[NRROWS][NRROWS])
+{
+    int i, j;
+    for (i = 0; i < NRROWS; i++) {
+        int val = arr[0][i];
+
+        for (j = 1; j < NRROWS; j++) {
+            if (arr[j][i] != val)
+                break;
+        }
+        /* Column successfuly verified. */
+        if (j == NRROWS)
+            return true;
+    }
+
+    return false;
+}
+
+int DiagonalCheck(int (&arr)[NRROWS][NRCOLS])
+{
+    /* Check the first diagonal */
+    int i;
+    int val;
+
+    val = arr[0][0];
+    for (i = 1; i < NRROWS; i++)
+        if (arr[i][i] != val)
+            break;
+
+    if (i == NRROWS)
+        return true;
+
+    val = arr[NRROWS - 1][0];
+    for (i = NRROWS - 2; i >= 0; i--)
+        if (arr[i - 1][i + 1] != val)
+            break;
+
+    if (i == 0)
+        return true;
+
+    return false;
+}
+
+static int TicTacToeWin(int (&arr)[NRROWS][NRROWS])
+{
+    if (RowCheck(arr) || ColCheck(arr) || DiagonalCheck(arr))
+        return true;
+    
+    return false;
+}
+
+int TicTacToe(void* data)
+{
+#define NRROWS 5
+#define NRCOLS 5
+    //5*5 matrix for now
+    int binaryMatrix[NRROWS][NRCOLS] = {
+        {1, 0, 1, 1, 1},
+        {0, 1, 0, 1, 0},
+        {0, 1, 1, 1, 1},
+        {0, 1, 1, 0, 1},
+        {1, 0, 1, 1, 1},
+    };
+    
+    if (TicTacToeWin(binaryMatrix))
+        std::cout << "We have a winner " << std::endl;
+    else
+        std::cout << "There is no winner yet on the board" << std::endl;
+
+    return TEST_SUCCESS;
+}
+
 const TestFamily* matrix_init()
 {
     TestFamily *testFamily = new TestFamily("matrix", static_cast<int>(10));
@@ -245,6 +400,8 @@ const TestFamily* matrix_init()
     TEST_DEF(print_matrix_spiral, PrintMatrixSpiral);
     TEST_DEF(print_matrix_diagonal, PrintMatrixDiagonal);
     TEST_DEF(unique_row, UniqueRow);
+    TEST_DEF(max_1s, Max1s);
+    TEST_DEF(ttt, TicTacToe);
 
     return testFamily;
 }
