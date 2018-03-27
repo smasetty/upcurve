@@ -108,7 +108,7 @@ void BoundaryTraversalLeft(struct TreeNode *root)
     if (root->left) {
         std::cout << root->key << " ";
         BoundaryTraversalLeft(root->left);
-    } 
+    }
     else if (root->right) {
         std::cout << root->key << " ";
         BoundaryTraversalLeft(root->right);
@@ -136,7 +136,7 @@ void BoundaryTraversalRight(struct TreeNode *root)
     if (root->right) {
         BoundaryTraversalRight(root->right);
         std::cout << root->key << " ";
-    } 
+    }
     else if (root->left) {
         BoundaryTraversalRight(root->left);
         std::cout << root->key << " ";
@@ -167,7 +167,7 @@ int LCAOfBT(void* data)
     struct TreeNode *root = CreateBinaryTree2();
     if(!root)
         return TEST_SKIPPED;
-   
+
     struct TreeNode *lca = LcaBt(root, 4, 25);
     if(lca)
         std::cout << lca->key << " ";
@@ -198,7 +198,7 @@ int DistanceNodes(void *data)
     int dist2 = LevelNode(lca, level, key);
 
     std::cout << "The distance between the nodes is " << dist1 + dist2 << std::endl;
-    
+
     return TEST_SUCCESS;
 }
 
@@ -249,9 +249,9 @@ struct TreeNode* GenerateBalancedBST(struct Node** headref, int n)
 
     struct TreeNode* left = GenerateBalancedBST(headref, n/2);
     struct TreeNode* root = new TreeNode((*headref)->key);
-    
+
     root->left = left;
-    
+
     *headref = (*headref)->next;
 
     root->right = GenerateBalancedBST(headref, n - n/2 - 1);
@@ -297,7 +297,7 @@ static void FixBstHelper(struct TreeNode* root, struct TreeNode** first,
 
     /* remember that this is an inorder traversal, recurse on the left tree */
     FixBstHelper(root->left, first, middle, last, prev);
-    
+
     /*
      * compare the prev node and the current node, the current node is always
      * supposed to be greater than the previous node, if not mark it as an
@@ -360,10 +360,10 @@ struct TreeNode* PreorderToBSTHelper(std::vector<int>& arr, int& index, int key,
 
         if (index < size) {
            root->left = PreorderToBSTHelper(arr, index, arr[index], min, key,
-                   size); 
+                   size);
 
            root->right = PreorderToBSTHelper(arr, index, arr[index], key, max,
-                   size); 
+                   size);
         }
 
         return root;
@@ -394,7 +394,7 @@ struct TreeNode* PostOrderToBSTHelper(std::vector<int>& arr, int& index,
             root->right = PostOrderToBSTHelper(arr, index, arr[index],
                     key, max, size);
         }
-        
+
         return root;
     }
 
@@ -418,7 +418,7 @@ int PreorderToBST(void *data)
     int max = INT_MAX;
     int index = size - 1;
     int key = arr[index];
- 
+
     struct TreeNode* root = PostOrderToBSTHelper(arr, index, key, min, max, size);
 
     InOrderPrint(root);
@@ -444,7 +444,7 @@ int PostOrderToBST(void *data)
     int max = INT_MAX;
     int key = arr[0];
     int index = 0;
- 
+
     struct TreeNode* root = PreorderToBSTHelper(arr, index, key, min, max, size);
     InOrderPrint(root);
     std::cout << std::endl;
@@ -462,9 +462,9 @@ int SerializeBT(void* data)
             strerror(errno) << std::endl;
         return TEST_SKIPPED;
     }
-    
+
     SerializeBinaryTree(root, fp);
-    
+
     InOrderPrint(root);
     std::cout << std::endl;
 
@@ -523,7 +523,7 @@ int InOrderWoRecursion(void* data)
 /*
  * We are trying to find a pair in a BST which equals a given sum,
  * The idea is that we traverse the tree in both the forward inorder and the
- * reverse inorder and see if the keys form a given sum. This approach is 
+ * reverse inorder and see if the keys form a given sum. This approach is
  * similar to the one we use for arrays
  */
 void FindSumBSTHelper(struct TreeNode* root, int sum)
@@ -710,7 +710,7 @@ struct TreeNodeX* InorderSuccessorHelper(struct TreeNodeX* node)
 
     /*
      * If there is no right node for the required node, then we need to
-     * find the first parent node in the path to the root which has a left 
+     * find the first parent node in the path to the root which has a left
      * child in the path
      */
     struct TreeNodeX *p = node->parent;
@@ -729,6 +729,31 @@ int InorderSuccessor(void* data)
 
     if (inOrderSuccessor)
         std::cout << inOrderSuccessor->key << " ";
+    std::cout << std::endl;
+
+    return TEST_SUCCESS;
+}
+
+int SumTreeHelper(struct TreeNode* root)
+{
+    if (!root)
+        return 0;
+
+    int temp = root->key;
+
+    root->key = SumTreeHelper(root->left) + SumTreeHelper(root->right);
+
+    return temp + root->key;
+}
+
+int SumTree(void* data)
+{
+    struct TreeNode* root = CreateBinaryTree1();
+
+    InOrderPrint(root);
+    std::cout << std::endl;
+    SumTreeHelper(root);
+    InOrderPrint(root);
     std::cout << std::endl;
 
     return TEST_SUCCESS;
@@ -754,6 +779,7 @@ const TestFamily* trees_init()
     TEST_DEF(find_sum_bst, FindSumBST);
     TEST_DEF(nodes_at_distance, NodesAtDistance);
     TEST_DEF(inorder_successor, InorderSuccessor);
+    TEST_DEF(sum_tree, SumTree);
 
     return testFamily;
 }
