@@ -683,13 +683,6 @@ int NodesAtDistance(void* data)
     return TEST_SUCCESS;
 }
 
-struct TreeNodeX{
-    int key;
-    struct TreeNodeX* left;
-    struct TreeNodeX* right;
-    struct TreeNodeX* parent;
-};
-
 struct TreeNodeX* GetMinValue(struct TreeNodeX* root)
 {
     struct TreeNodeX* current = root;
@@ -759,6 +752,33 @@ int SumTree(void* data)
     return TEST_SUCCESS;
 }
 
+void InOrderNodesHelper(struct TreeNodeX* root, struct TreeNodeX** headref)
+{
+    if (!root)
+        return;
+
+    InOrderNodesHelper(root->right, headref);
+
+    /*
+     * parent is not actually a parent, but has a pointer to the inorder
+     * successor for the node
+     */
+    root->parent = *headref;
+    *headref = root;
+
+    InOrderNodesHelper(root->left, headref);
+}
+
+int InorderNodes(void* data)
+{
+    struct TreeNodeX* root = CreateBinaryTreeX1();
+    struct TreeNodeX* next = nullptr;
+
+    InOrderNodesHelper(root, &next);
+
+    return TEST_SUCCESS;
+}
+
 const TestFamily* trees_init()
 {
     TestFamily *testFamily = new TestFamily("trees", static_cast<int>(10));
@@ -780,6 +800,7 @@ const TestFamily* trees_init()
     TEST_DEF(nodes_at_distance, NodesAtDistance);
     TEST_DEF(inorder_successor, InorderSuccessor);
     TEST_DEF(sum_tree, SumTree);
+    TEST_DEF(inorder, InorderNodes);
 
     return testFamily;
 }

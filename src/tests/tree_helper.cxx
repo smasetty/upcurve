@@ -16,6 +16,17 @@ struct TreeNode* CreateBinaryTree1()
     return root;
 }
 
+struct TreeNodeX* CreateBinaryTreeX1()
+{
+    struct TreeNodeX* root = new TreeNodeX(10);
+    root->left = new TreeNodeX(2);
+    root->right = new TreeNodeX(7);
+    root->left->left = new TreeNodeX(8);
+    root->left->right = new TreeNodeX(4);
+
+    return root;
+}
+
 // Function to create a simple binary tree
 struct TreeNode* CreateBinaryTree2()
 {

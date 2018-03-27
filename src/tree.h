@@ -10,6 +10,22 @@ public:
     ~TreeNode() {};
 };
 
+struct TreeNodeX {
+    int key;
+    struct TreeNodeX *left, *right, *parent;
+public:
+    /*
+     * A few constructors
+     */
+    TreeNodeX(int key): key(key) {left = nullptr; right = nullptr;
+        parent = nullptr;};
+
+    TreeNodeX() {key = 0; left = nullptr; right = nullptr;
+        parent = nullptr;};
+
+    ~TreeNodeX() {};
+};
+
 class Tree {
 public:
     virtual void InsertKey(int key) = 0;
