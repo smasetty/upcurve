@@ -85,6 +85,24 @@ struct Node* GenerateListLoop1()
     return head;
 }
 
+struct NodeR* GenerateListRandom()
+{
+    struct NodeR *head = new NodeR(1);
+    head->next = new NodeR(2);
+    head->next->next = new NodeR(3);
+    head->next->next->next = new NodeR(4);
+    head->next->next->next->next = new NodeR(5);
+
+    /* setup the random pointers */
+    head->random = head->next->next;
+    head->next->random = head->next->next->next;
+    head->next->next->random = head->next->next->next->next;
+    head->next->next->next->random = head->next->next->next->next->next;
+    head->next->next->next->next->random = head->next;
+
+    return head;
+}
+
 void DeleteList(struct Node* head)
 {
     struct Node* current = head;
@@ -114,6 +132,19 @@ void PrintList(struct NodeX* head)
     while(current != nullptr) {
         std::cout<< current->key << " ";
         current = current->down;
+    }
+    std::cout << std::endl;
+}
+
+void PrintList(struct NodeR* head)
+{
+    struct NodeR* current = head;
+
+    while(current) {
+        struct NodeR* temp = current->random;
+        std::cout << current->key << " -- r: " << (temp ? temp->key : -1);
+        std::cout << std::endl;
+        current = current->next;
     }
     std::cout << std::endl;
 }
@@ -241,7 +272,7 @@ struct Node* ReverseListAltK(struct Node* head, int& k)
  * Basic idea is to
  * a) find the node where slow and fast meet
  * b) start ptr1 from head and ptr2 from the node from (a)
- * c) move both the pointers at the same speed, they will meet 
+ * c) move both the pointers at the same speed, they will meet
  * at the start of the loop node.
  *
  * reasoning:
@@ -340,7 +371,7 @@ struct Node* LLAdd(struct Node* first, struct Node* second)
             carry = 0;
 
         temp = new Node(sum);
-    
+
         if (result == nullptr)
             result = temp;
         else

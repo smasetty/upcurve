@@ -131,7 +131,7 @@ struct NodeX* SortedMerge(struct NodeX* a, struct NodeX* b)
      */
     if (!b)
         return a;
-    
+
     struct NodeX* result = nullptr;
 
     /*
@@ -153,7 +153,7 @@ struct NodeX* Flatten(struct NodeX* head)
 {
     if(!head || !head->next)
         return head;
-    
+
     struct NodeX* rest = Flatten(head->next);
 
     return SortedMerge(head, rest);
@@ -197,7 +197,7 @@ void LRUCacheRefer(std::list<int>& list,
          */
         list.erase(hash[key]);
     }
-    
+
     /*
      * Add the key to the front of the list.
      */
@@ -261,6 +261,49 @@ int IsListPalindrome(void* data)
     return TEST_SUCCESS;
 }
 
+int CloneList(void* data)
+{
+    std::unordered_map<struct NodeR*, struct NodeR*> map;
+    struct NodeR* head = GenerateListRandom();
+
+    /*
+     * Print the original list here along with the random pointers
+     */
+    PrintList(head);
+    std::cout << std::endl;
+
+    struct NodeR* origCurr = head;
+
+    /*
+     * First create a map of nodes from original to cloned lists
+     */
+    while(origCurr) {
+        map[origCurr] = new NodeR(origCurr->key);
+        origCurr = origCurr->next;
+    }
+
+    origCurr = head;
+
+    /*
+     * recreate next and random pointers for the cloned list  using the mapping
+     * created above
+     */
+    while(origCurr) {
+        struct NodeR* cloneCurr = map[origCurr];
+        cloneCurr->next = map[origCurr->next];
+        cloneCurr->random = map[origCurr->random];
+        origCurr = origCurr->next;
+    }
+
+    /*
+     * Print the cloned list here along with the random pointers
+     */
+    PrintList(map[head]);
+    std::cout << std::endl;
+
+    return TEST_SUCCESS;
+}
+
 const TestFamily* ll_init()
 {
     TestFamily *testFamily = new TestFamily("ll", static_cast<int>(10));
@@ -276,6 +319,7 @@ const TestFamily* ll_init()
     TEST_DEF(ll_flat, LLFlat);
     TEST_DEF(lru_cache, LRUCache);
     TEST_DEF(is_list_palindrome, IsListPalindrome);
+    TEST_DEF(clone_list, CloneList);
 
     return testFamily;
 }

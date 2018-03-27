@@ -16,6 +16,14 @@ public:
     NodeX(int key): key{key}, next{nullptr}, down{nullptr} {};
 };
 
+struct NodeR {
+    int key;
+    struct NodeR* next;
+    struct NodeR* random;
+public:
+    NodeR(int key): key{key}, next{nullptr}, random{nullptr} {};
+};
+
 struct Node* GenerateListEven();
 struct Node* GenerateListOdd();
 struct Node* GenerateListLoop();
@@ -25,8 +33,10 @@ struct Node* GenerateListNum2();
 struct Node* GenerateListDen1();
 struct Node* GenerateListDen2();
 struct NodeX* GenerateListNotFlat();
+struct NodeR* GenerateListRandom();
 void PrintList(struct Node* head);
 void PrintList(struct NodeX* head);
+void PrintList(struct NodeR* head);
 void DeleteList(struct Node* head);
 void ReverseList(struct Node** headref);
 struct Node* ReverseListAltK(struct Node* head, int& k);
