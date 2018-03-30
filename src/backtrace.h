@@ -143,5 +143,4 @@ private:
     std::string mInput;
     int mInputSize;
 };
-
 #endif
