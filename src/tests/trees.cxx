@@ -779,6 +779,29 @@ int InorderNodes(void* data)
     return TEST_SUCCESS;
 }
 
+static bool SameTreeHelper(struct TreeNode* tree1, struct TreeNode* tree2)
+{
+    if (!tree1 && !tree2)
+        return true;
+
+    if (tree1 && tree2)
+        return (tree1->key == tree2->key) && SameTreeHelper(tree1->left, tree2->left) && SameTreeHelper(tree1->right, tree2->right);
+
+    return false;
+}
+
+int  SameTrees(void* data)
+{
+    struct TreeNode* tree1 = CreateBinaryTree1();
+    struct TreeNode* tree2 = CreateBinaryTree1();
+
+    if (SameTreeHelper(tree1, tree2))
+        std::cout << "Both the trees are the same" << std::endl;
+    else
+        std::cout << "Both the trees are not the same" << std::endl;
+    return TEST_SUCCESS;
+}
+
 const TestFamily* trees_init()
 {
     TestFamily *testFamily = new TestFamily("trees", static_cast<int>(10));
@@ -801,6 +824,7 @@ const TestFamily* trees_init()
     TEST_DEF(inorder_successor, InorderSuccessor);
     TEST_DEF(sum_tree, SumTree);
     TEST_DEF(inorder, InorderNodes);
+    TEST_DEF(same_trees, SameTrees);
 
     return testFamily;
 }
