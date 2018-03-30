@@ -1,5 +1,5 @@
 #ifndef BACKTRACE_H
-#define BACKTRACE_H value
+#define BACKTRACE_H
 
 #include <vector>
 #include <string>
@@ -84,7 +84,7 @@ public:
 
     void FindCandidates(std::vector<int>& a, int k,
             std::vector<int>& candidates) override {
-        
+
         candidates.push_back(1);
         candidates.push_back(0);
     }
@@ -101,7 +101,7 @@ private:
 };
 
 class StringPerm: public BacktrackChar {
-public: 
+public:
     StringPerm(std::string& input) {
         mInput.assign(input);
         mInputSize = mInput.size();
@@ -110,7 +110,7 @@ public:
     bool IsASol(std::vector<char>& a, int k) override {
         return (k==mInput.size());
     }
-    
+
     void ProcessSol(std::vector<char>& a, int k) override {
         for (auto it = a.begin(); it != a.end(); it++)
             std::cout << *it << " ";
@@ -142,6 +142,6 @@ private:
     std::vector<char> a;
     std::string mInput;
     int mInputSize;
-}; 
+};
 
 #endif
