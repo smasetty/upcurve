@@ -3,6 +3,7 @@
 #include <vector>
 #include <stack>
 #include <map>
+#include <set>
 #include "test_framework.h"
 
 /*
@@ -174,7 +175,7 @@ int FuelProblemHelper(struct FuelNode* list, int n)
 
     /*
      * Simulate a queue implementation by maintaining a start and an end index
-     * and iterate the array until either the start equals the end in which 
+     * and iterate the array until either the start equals the end in which
      * case we found a starting node on the circle, or if the fuel is negative
      * in which case we try to find the next possible node as a potential
      * starting point.
@@ -216,7 +217,7 @@ int FuelProblem(void* data)
     if (ret < 0)
         std::cout << "There is no solution to the problem" << std::endl;
     else
-        std::cout << "There is a circular route possible starting from: " << ret << std::endl; 
+        std::cout << "There is a circular route possible starting from: " << ret << std::endl;
 
     return TEST_SUCCESS;
 }
@@ -230,7 +231,7 @@ int MinSortedRotatedHelper(std::vector<int>& arr, int low, int high)
     if (high < low)
         return arr[0];
 
-    /* 
+    /*
      * If there is only one element left, then just return that element
      */
     if (high == low)
@@ -243,7 +244,7 @@ int MinSortedRotatedHelper(std::vector<int>& arr, int low, int high)
 
     if ((mid > low) && arr[mid] < arr[mid - 1])
         return arr[mid];
-    
+
     if (arr[high] > arr[mid])
         return MinSortedRotatedHelper(arr, low, mid - 1);
     else
@@ -328,7 +329,7 @@ int SearchRotatedSortedHelper(std::vector<int>& arr, int low, int high,
     if (arr[low] <= arr[mid]) {
         if (key >= arr[low] && key <= arr[mid])
             return SearchRotatedSortedHelper(arr, low, mid -1, key);
-        else 
+        else
             return SearchRotatedSortedHelper(arr, mid + 1, high, key);
     }
 
@@ -457,7 +458,7 @@ int IsNumPalindrome(void* data)
 {
     int testNum = 123211234;
     int testNumDup = testNum;
-    
+
     if (IsNumPalindromeHelper(testNum, &testNumDup))
         std::cout << "The given number: " << testNum << " is a palindrome" << std::endl;
     else
@@ -520,10 +521,10 @@ int MedianSorted(void* data)
 {
     //int arr1[] = {1, 12, 15, 26, 28};
     //int arr2[] = {2, 13, 17, 30, 45};
-    
+
     int arr1[] = {1, 2, 3, 6};
     int arr2[] = {4, 6, 8, 10};
-    
+
     std::cout << "Median of the Input arrays is: ";
     std::cout <<  MedianSortedHelper(arr1, arr2, ARRAY_SIZE(arr1)) << std::endl;
 
@@ -613,14 +614,14 @@ int CountBits(void* data)
 
     int a = 12;
     int b = 1;
-    
+
     std::cout << "Number of bit swaps needed to change from A to B: " <<
         CountSetBits(a^b) << std::endl;
 
     return TEST_SUCCESS;
 }
 
-int Equilibrium_Index(void* data)
+int EquilibriumIndex(void* data)
 {
     std::vector<int> arr = {-7, 1, 5, 2, -4, 3, 0};
     int n = arr.size();
@@ -638,6 +639,34 @@ int Equilibrium_Index(void* data)
             std::cout << "equilibrium index is: " << i << std::endl;
 
         leftSum += arr[i];
+    }
+
+    return TEST_SUCCESS;
+}
+
+int FindFour(void* data)
+{
+    std::vector<int> input = {3, 4, 7, 1, 2, 9, 8};
+    int n = input.size();
+    std::map<int, std::pair<int, int>> myMap;
+
+    for(int i = 0; i < n; i++) {
+        for (int j = i + 1; j < n; j++) {
+
+            int sum = input[i] + input[j];
+
+            if (myMap.find(sum) == myMap.end()) {
+                myMap[sum] = std::make_pair(i, j);
+            }
+            else {
+                std::pair<int, int> pp = myMap[sum];
+
+                std::cout << input[pp.first] << ", " << input[pp.second] << " --- " <<
+                    input[i] << ", " <<input[j] << std::endl;
+
+                //return TEST_SUCCESS;
+            }
+        }
     }
 
     return TEST_SUCCESS;
@@ -663,7 +692,8 @@ const TestFamily* arrays_init()
     TEST_DEF(sort_012, Sort012);
     TEST_DEF(sort_01, Sort01);
     TEST_DEF(count_bits, CountBits);
-    TEST_DEF(eq_idx, Equilibrium_Index);
+    TEST_DEF(eq_idx, EquilibriumIndex);
+    TEST_DEF(find_four, FindFour);
 
     return testFamily;
 }
