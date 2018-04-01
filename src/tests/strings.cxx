@@ -407,7 +407,7 @@ int IToA(void* data)
 int IsPalindrome(void* data)
 {
     std::string testString("Sharat");
-    
+
     int low = 0;
     int high = testString.size() - 1;
 
@@ -441,12 +441,12 @@ int ReplaceSpaces(void* data)
      */
     while(testString[--i] == ' ') {
 
-        std::cout << "remove trailing white spaces " << std::endl;
         testString.pop_back();
         countSpaces--;
     }
 
-    std::cout << "Original String: " << testString << " " << countSpaces << std::endl;
+    std::cout << "Original String: " << testString << " "
+        << countSpaces << std::endl;
 
     int newLength = testString.size() + 2 * countSpaces;
     index = newLength - 1;
@@ -467,6 +467,44 @@ int ReplaceSpaces(void* data)
     return TEST_SUCCESS;
 }
 
+/*
+ * @i: index into the input string
+ * @j: index into the output buffer
+ */
+static void StringSpacePermHelper(const std::string& input, std::string buffer,
+        int i, int j)
+{
+    if (i == input.size()) {
+        std::cout << buffer << std::endl;
+        return;
+    }
+
+    /*
+     * recurse here, either we add the char from the input
+     * or add a space followed by the char
+     */
+    buffer[j] = input[i];
+    StringSpacePermHelper(input, buffer, i + 1, j + 1);
+
+    buffer[j++] = ' ';
+    buffer[j] = input[i];
+    StringSpacePermHelper(input, buffer, i + 1, j + 2);
+}
+
+int StringSpacePerm(void* data)
+{
+    std::string input("ABC");
+    std::string output;
+    int n = input.size();
+
+    output.resize((2*n) - 1);
+
+    output[0] = input[0];
+    StringSpacePermHelper(input, output, 1, 1);
+
+    return TEST_SUCCESS;
+}
+
 const TestFamily* strings_init()
 {
     TestFamily *testFamily = new TestFamily("strings", static_cast<int>(10));
@@ -482,6 +520,7 @@ const TestFamily* strings_init()
     TEST_DEF(itoa, IToA);
     TEST_DEF(is_palindrome, IsPalindrome);
     TEST_DEF(replace_spaces, ReplaceSpaces);
+    TEST_DEF(string_space_perm, StringSpacePerm);
 
     return testFamily;
 }
