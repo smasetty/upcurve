@@ -672,6 +672,57 @@ int FindFour(void* data)
     return TEST_SUCCESS;
 }
 
+void SwapInts(std::vector<int>& arr, int x, int y)
+{
+    int temp = arr[x];
+    arr[x] = arr[y];
+    arr[y] = temp;
+}
+
+int AltPosNeg(void* data)
+{
+    std::vector<int> arr = {-1, 2, -3, 4, 5, 6, -7, 8, 9};
+    int n = arr.size();
+    int i = -1;
+
+    for (auto it = arr.begin(); it != arr.end(); it++)
+        std::cout << *it << " ";
+    std::cout << std::endl;
+
+    /*
+     * Partial QuickSort Implementation, seperate the
+     * negative and the positive numbers of the array
+     * by picking the pivot as 0
+     */
+    for (int j = 0; j < n; j++) {
+
+        if (arr[j] < 0) {
+            i++;
+            SwapVector(arr, i, j);
+        }
+    }
+
+    int neg = 0;
+    int pos = i + 1;
+
+    /*
+     * neg is the start of the negative numbers and pos is the start of the
+     * positive numbers. Just swap the pos and neg indices to make sure they
+     * alternate.
+     */
+    while (pos < n && neg < pos && arr[neg] < 0) {
+        SwapInts(arr, pos, neg);
+        pos++;
+        neg += 2;
+    }
+
+    for (auto it = arr.begin(); it != arr.end(); it++)
+        std::cout << *it << " ";
+    std::cout << std::endl;
+
+    return TEST_SUCCESS;
+}
+
 const TestFamily* arrays_init()
 {
     TestFamily *testFamily = new TestFamily("arrays", static_cast<int>(100));
@@ -694,6 +745,7 @@ const TestFamily* arrays_init()
     TEST_DEF(count_bits, CountBits);
     TEST_DEF(eq_idx, EquilibriumIndex);
     TEST_DEF(find_four, FindFour);
+    TEST_DEF(alt_pos_neg, AltPosNeg);
 
     return testFamily;
 }
