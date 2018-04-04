@@ -802,6 +802,42 @@ int  SameTrees(void* data)
     return TEST_SUCCESS;
 }
 
+
+/*
+ * A bit of a hacked up setup going on here, as I am using an existing struct
+ * to solve this problem. Treating the "parent" pointer as a "nextRight"
+ * pointer. Also this approach only works for a complete binary tree.
+ */
+void ConnectNextHelper(struct TreeNodeX* root)
+{
+    if (!root)
+        return;
+
+    if (root->left)
+        root->left->parent = root->right;
+    if (root->right)
+        root->right->parent = root->parent? root->parent->left : nullptr;
+
+    ConnectNextHelper(root->left);
+    ConnectNextHelper(root->right);
+}
+
+/*
+ * Connect the nodes at the same level in a binary tree
+ */
+int ConnectNext(void* data)
+{
+    struct TreeNodeX* root = CreateBinaryTreeX1();
+    if (!root)
+        return TEST_SKIPPED;
+
+    root->parent = nullptr;
+    ConnectNextHelper(root);
+    /*Deleting the verfication part for now*/
+
+    return TEST_SUCCESS;
+}
+
 const TestFamily* trees_init()
 {
     TestFamily *testFamily = new TestFamily("trees", static_cast<int>(10));
@@ -825,6 +861,7 @@ const TestFamily* trees_init()
     TEST_DEF(sum_tree, SumTree);
     TEST_DEF(inorder, InorderNodes);
     TEST_DEF(same_trees, SameTrees);
+    TEST_DEF(connect_next, ConnectNext);
 
     return testFamily;
 }

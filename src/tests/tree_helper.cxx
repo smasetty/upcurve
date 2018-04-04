@@ -23,6 +23,8 @@ struct TreeNodeX* CreateBinaryTreeX1()
     root->right = new TreeNodeX(7);
     root->left->left = new TreeNodeX(8);
     root->left->right = new TreeNodeX(4);
+    root->right->left = new TreeNodeX(18);
+    root->right->right = new TreeNodeX(14);
 
     return root;
 }
