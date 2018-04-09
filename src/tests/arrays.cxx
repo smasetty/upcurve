@@ -723,6 +723,40 @@ int AltPosNeg(void* data)
     return TEST_SUCCESS;
 }
 
+int SumZero(void* data)
+{
+    std::vector<int> arr = {1, 60, -10, 70, -80, 85};
+    int l = 0;
+    int r = arr.size() - 1;
+    int mL = 0;
+    int mR = arr.size() - 1;
+    int sum = 0;
+    int absMinSum = INT_MAX;
+
+    std::sort(arr.begin(), arr.end());
+//    for (auto it = arr.begin(); it != arr.end(); it++)
+//        std::cout << *it << " ";
+
+    while (l < r) {
+        sum = arr[l] + arr[r];
+
+        if (std::abs(sum) < std::abs(absMinSum)) {
+            absMinSum = sum;
+            mL = l;
+            mR = r;
+        }
+
+        if (sum < 0)
+            l++;
+        else
+            r--;
+    }
+
+    std::cout << arr[mL] << ", " << arr[mR] <<  ", " <<absMinSum <<std::endl;
+
+    return TEST_SUCCESS;
+}
+
 const TestFamily* arrays_init()
 {
     TestFamily *testFamily = new TestFamily("arrays", static_cast<int>(100));
@@ -746,6 +780,8 @@ const TestFamily* arrays_init()
     TEST_DEF(eq_idx, EquilibriumIndex);
     TEST_DEF(find_four, FindFour);
     TEST_DEF(alt_pos_neg, AltPosNeg);
+    TEST_DEF(sum_zero, SumZero);
+
 
     return testFamily;
 }
