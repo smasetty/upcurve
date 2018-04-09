@@ -16,6 +16,7 @@ struct TreeNodeX* CreateBinaryTreeX1();
 struct TreeNode* CreateBinaryTree2();
 
 struct TreeNode* CreateBinarySearchTree();
+struct TreeNode* CreateBinarySearchTree2();
 
 //Calculate the number of nodes in a tree
 int TreeSize(struct TreeNode *root);

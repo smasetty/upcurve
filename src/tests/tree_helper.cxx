@@ -58,6 +58,20 @@ struct TreeNode* CreateBinarySearchTree()
     return root;
 }
 
+// Function to create a simple binary tree
+struct TreeNode* CreateBinarySearchTree2()
+{
+    struct TreeNode *root = new TreeNode(15);
+    root->left = new TreeNode(10);
+    root->right = new TreeNode(20);
+    root->left->left = new TreeNode(7);
+    root->left->right = new TreeNode(12);
+    root->right->left = new TreeNode(17);
+    root->right->right = new TreeNode(25);
+
+    return root;
+}
+
 int TreeSize(struct TreeNode *root)
 {
     if (!root)

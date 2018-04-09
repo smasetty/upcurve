@@ -595,7 +595,6 @@ void FindSumBSTHelper(struct TreeNode* root, int sum)
             std::cout << "There is no pair with the given sum" << std::endl;
             return;
         }
-
     }
 }
 
@@ -838,6 +837,84 @@ int ConnectNext(void* data)
     return TEST_SUCCESS;
 }
 
+/*
+ * Print common nodes in the two input binary search trees. It is assumed that
+ * the two trees are strictly binary search trees.
+ */
+void SameNodesHelper(struct TreeNode* root1, struct TreeNode* root2)
+{
+    struct TreeNode* current1 = root1;
+    struct TreeNode* current2 = root2;
+    std::stack<struct TreeNode*> s1, s2;
+    bool done1 = false;
+    bool done2 = false;
+    int val1 = 0;
+    int val2 = 0;
+
+    while(1) {
+        while(done1 == false) {
+            if (current1) {
+                s1.push(current1);
+                current1 = current1->left;
+            }
+            else {
+                if (s1.empty()) {
+                    done1 = true;
+                    return;
+                }
+                else {
+                    struct TreeNode* temp = s1.top();
+                    s1.pop();
+                    val1 = temp->key;
+                    current1 = temp->right;
+                    done1 = true;
+                }
+            }
+        }
+
+        while(done2 == false) {
+            if (current2) {
+                s2.push(current2);
+                current2 = current2->left;
+            }
+            else {
+                if (s2.empty()) {
+                    done2 = true;
+                    return;
+                }
+                else {
+                    struct TreeNode* temp = s2.top();
+                    s2.pop();
+                    val2 = temp->key;
+                    current2 = temp->right;
+                    done2 = true;
+                }
+            }
+        }
+
+        if (val1 == val2) {
+            done1 = false;
+            done2 = false;
+            std::cout << val1 << " ";
+        }
+        else if (val1 < val2)
+            done1 = false;
+        else if (val1 > val2)
+            done2 = false;
+    }
+}
+
+int SameNodes(void* data)
+{
+    struct TreeNode* root1 = CreateBinarySearchTree();
+    struct TreeNode* root2 = CreateBinarySearchTree2();
+
+    std::cout << "Here are the common nodes in both trees" << std::endl;
+    SameNodesHelper(root1, root2);
+    std::cout << std::endl;
+    return TEST_SUCCESS;
+}
+
 const TestFamily* trees_init()
 {
     TestFamily *testFamily = new TestFamily("trees", static_cast<int>(10));
@@ -862,6 +939,7 @@ const TestFamily* trees_init()
     TEST_DEF(inorder, InorderNodes);
     TEST_DEF(same_trees, SameTrees);
     TEST_DEF(connect_next, ConnectNext);
+    TEST_DEF(same_nodes, SameNodes);
 
     return testFamily;
 }
