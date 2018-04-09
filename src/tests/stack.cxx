@@ -193,7 +193,7 @@ bool MatchingParanHelper(std::string testString)
         char inputChar = testString[i];
         std::cout << inputChar;
 
-        if (inputChar == '(' || inputChar == '[' || inputChar == '{') 
+        if (inputChar == '(' || inputChar == '[' || inputChar == '{')
             s.push(inputChar);
 
         else if (inputChar == ')' || inputChar == ']' || inputChar == '}') {
@@ -227,6 +227,82 @@ int MatchingParan(void* data)
     return TEST_SUCCESS;
 }
 
+#define NUM_CELEBRITIES 4
+int Celebs[NUM_CELEBRITIES][NUM_CELEBRITIES] = {
+    {0, 0, 1, 0},
+    {0, 0, 1, 0},
+    {0, 0, 0, 0},
+    {0, 0, 1, 0},
+};
+
+bool knows(int a, int b)
+{
+    return Celebs[a][b];
+}
+
+int Celebrity(void* data)
+{
+    std::stack<int> s;
+    int A, B, C;
+
+    for (int i = 0; i < NUM_CELEBRITIES; i++)
+        s.push(i);
+
+    A = s.top();
+    s.pop();
+
+    B = s.top();
+    s.pop();
+
+    while(s.size() > 1) {
+        if (knows(A, B)) {
+            A = s.top();
+            s.pop();
+        }
+        else {
+            B = s.top();
+            s.pop();
+        }
+    }
+
+    C = s.top();
+    s.pop();
+
+    if (knows(C, A))
+        C = A;
+    if (knows(C, B))
+        C = B;
+
+    for (int i = 0; i < NUM_CELEBRITIES; i++) {
+        if (i != C && (knows(C, i) || !knows(i, C)))
+            return -1;
+    }
+
+    std::cout << C << " --- " << std::endl;
+    return TEST_SUCCESS;
+}
+
+int CelebritySimple(void* data)
+{
+    int a = 0;
+    int b = NUM_CELEBRITIES - 1;
+
+    while (a < b) {
+        if (knows(a, b))
+            a++;
+        else
+            b--;
+    }
+
+    for (int i = 0; i < NUM_CELEBRITIES; i++) {
+        if (i != a && (knows(a, i) || !knows(i, a)))
+            return -1;
+    }
+
+    std::cout << a << " --- " << std::endl;
+    return TEST_SUCCESS;
+}
+
 const TestFamily* stack_init()
 {
     TestFamily *testFamily = new TestFamily("stack", static_cast<int>(10));
@@ -235,6 +311,8 @@ const TestFamily* stack_init()
     TEST_DEF(stack_reverse, StackReverse);
     TEST_DEF(next_greater, NextGreaterElement);
     TEST_DEF(matching_paran, MatchingParan);
+    TEST_DEF(celebrity, Celebrity);
+    TEST_DEF(celebrity1, CelebritySimple);
 
     return testFamily;
 }

@@ -15,7 +15,7 @@ public:
         int getMaxQueueSize() {
             return max_size;
         }
-        
+
         void addItem() {
             std::unique_lock<std::mutex> l(lock);
 
@@ -42,6 +42,11 @@ public:
             }
             q.pop();
 
+            /* The unlock here is strictly not needed, as its automatically
+             * going to be unlocked once it goes out of scope, but doing it
+             * this way allows the other waiting thread to get hold of the lock
+             * sooner. Its a small optimization
+             */
             l.unlock();
             not_full.notify_one();
         }
