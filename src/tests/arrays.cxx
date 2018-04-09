@@ -787,6 +787,37 @@ int TrapRainWater(void* data)
     return TEST_SUCCESS;
 }
 
+int TrapRainWater2(void* data)
+{
+    std::vector<int> arr = {3, 0, 0, 2, 0, 4};
+    int n = arr.size();
+    int lo = 0;
+    int high = n - 1;
+    int leftMax = 0, rightMax = 0;
+    int totalWater = 0;
+
+    while(lo < high) {
+        if (arr[lo] < arr[high]) {
+            if (arr[lo] > leftMax)
+                leftMax = arr[lo];
+            else
+                totalWater += leftMax - arr[lo];
+            lo++;
+        }
+        else {
+            if (arr[high] > arr[rightMax])
+                rightMax = arr[high];
+            else
+                totalWater += rightMax - arr[lo];
+            high--;
+        }
+    }
+
+    std::cout << "The total water collected is: " << totalWater << std::endl;
+
+    return TEST_SUCCESS;
+}
+
 const TestFamily* arrays_init()
 {
     TestFamily *testFamily = new TestFamily("arrays", static_cast<int>(100));
@@ -812,6 +843,7 @@ const TestFamily* arrays_init()
     TEST_DEF(alt_pos_neg, AltPosNeg);
     TEST_DEF(sum_zero, SumZero);
     TEST_DEF(trap_rain_water, TrapRainWater);
+    TEST_DEF(trap_rain_water2, TrapRainWater2);
 
     return testFamily;
 }
