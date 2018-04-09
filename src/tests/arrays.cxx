@@ -734,8 +734,6 @@ int SumZero(void* data)
     int absMinSum = INT_MAX;
 
     std::sort(arr.begin(), arr.end());
-//    for (auto it = arr.begin(); it != arr.end(); it++)
-//        std::cout << *it << " ";
 
     while (l < r) {
         sum = arr[l] + arr[r];
@@ -753,6 +751,38 @@ int SumZero(void* data)
     }
 
     std::cout << arr[mL] << ", " << arr[mR] <<  ", " <<absMinSum <<std::endl;
+
+    return TEST_SUCCESS;
+}
+
+int TrapRainWater(void* data)
+{
+    std::vector<int> arr = {3, 0, 0, 2, 0, 4};
+    int n = arr.size();
+    std::vector<int> left(n, 0);
+    std::vector<int> right(n, 0);
+    int totalWater = 0;
+
+    left[0] = arr[0];
+    for(int i = 1; i < n; i++)
+        left[i] = std::max(left[i-1], arr[i]);
+
+    for (auto it = left.begin(); it != left.end(); it++)
+        std::cout << *it << " ";
+    std::cout << std::endl;
+
+    right[n-1] = arr[n-1];
+    for(int i = n-2; i >= 0; i--)
+        right[i] = std::max(right[i+1], arr[i]);
+
+    for (auto it = right.begin(); it != right.end(); it++)
+        std::cout << *it << " ";
+    std::cout << std::endl;
+
+    for(int i = 0; i < n; i++)
+        totalWater += (std::min(left[i], right[i]) - arr[i]);
+
+    std::cout << "The total water collected is: " << totalWater << std::endl;
 
     return TEST_SUCCESS;
 }
@@ -781,7 +811,7 @@ const TestFamily* arrays_init()
     TEST_DEF(find_four, FindFour);
     TEST_DEF(alt_pos_neg, AltPosNeg);
     TEST_DEF(sum_zero, SumZero);
-
+    TEST_DEF(trap_rain_water, TrapRainWater);
 
     return testFamily;
 }
