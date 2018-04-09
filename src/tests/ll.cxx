@@ -304,6 +304,29 @@ int CloneList(void* data)
     return TEST_SUCCESS;
 }
 
+void Swap(int* a, int* b)
+{
+    int temp = *a;
+    *a = *b;
+    *b = temp;
+}
+
+int PairSwap(void* data)
+{
+    struct Node* head = GenerateListEven();
+    PrintList(head);
+
+    struct Node* curr = head;
+
+    while(curr != nullptr && curr->next != nullptr) {
+        Swap(&curr->key, &curr->next->key);
+        curr = curr->next->next;
+    }
+    PrintList(head);
+
+    return TEST_SUCCESS;
+}
+
 const TestFamily* ll_init()
 {
     TestFamily *testFamily = new TestFamily("ll", static_cast<int>(10));
@@ -320,6 +343,7 @@ const TestFamily* ll_init()
     TEST_DEF(lru_cache, LRUCache);
     TEST_DEF(is_list_palindrome, IsListPalindrome);
     TEST_DEF(clone_list, CloneList);
+    TEST_DEF(pair_swap, PairSwap);
 
     return testFamily;
 }
